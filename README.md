@@ -1,9 +1,11 @@
-# personal-website
-Home base for the website!
 
-What a beautiful, blank, and unlimited Canvas. Here are some of my ideas. 
+  # Personal Themed Website
 
-1. My favorite poem
-2. Info about my parents
-3. Frisbee coin flip
-4. Catoctin Quaker Camp
+  This is a code bundle for Personal Themed Website. The original project is available at https://www.figma.com/design/yc77SIOmnuzdexsNxvklMG/Personal-Themed-Website.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
