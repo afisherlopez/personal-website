@@ -175,30 +175,23 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   const contactMethods = [
     {
-      platform: 'Instagram',
-      handle: '@anna.luna_',
-      url: 'https://instagram.com/anna.luna_',
-      icon: Instagram,
-      color: 'hover:text-pink-500'
-    },
-    {
       platform: 'LinkedIn',
-      handle: '/in/yourname',
-      url: 'https://linkedin.com/in/yourname',
+      handle: '/in/annafisherlopez',
+      url: 'https://linkedin.com/in/annafisherlopez',
       icon: Linkedin,
       color: 'hover:text-blue-600'
     },
     {
       platform: 'GitHub',
-      handle: '@yourusername',
-      url: 'https://github.com/yourusername',
+      handle: '@afisherlopez',
+      url: 'https://github.com/afisherlopez',
       icon: Github,
       color: 'hover:text-gray-900 dark:hover:text-gray-100'
     },
     {
       platform: 'Email',
-      handle: 'your.email@example.com',
-      url: 'mailto:your.email@example.com',
+      handle: 'annafisherlopez@gmail.com',
+      url: 'mailto:annafisherlopez@gmail.com',
       icon: Mail,
       color: 'hover:text-primary'
     }
