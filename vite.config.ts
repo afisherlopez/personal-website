@@ -3,7 +3,9 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
+
   export default defineConfig({
+    base: '/',  // Replace with your repo name
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -52,7 +54,7 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      outDir: 'docs',
     },
     server: {
       port: 3000,
