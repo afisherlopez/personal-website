@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import FunFactsPage from "./components/FunFactsPage";
 import ProjectsPage from "./components/ProjectsPage";
 import ContactPage from "./components/ContactPage";
+import backgroundImage from "./images/mt-whitney-background.JPG";
 
 export type Page = "home" | "funfacts" | "projects" | "contact";
 
@@ -29,14 +30,14 @@ export default function App() {
     <div
       className="min-h-screen relative"
       style={{
-        backgroundImage: `url(https://images.unsplash.com/photo-1632929644466-e68984931d6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaWVycmElMjBtb3VudGFpbnMlMjBzdW5zZXQlMjBsYW5kc2NhcGV8ZW58MXx8fHwxNzU4MTYxMDQ3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral)`,
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay to make background more subtle */}
-      <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+      {/* Overlay to make background more visible - reduced from 85% to 55% */}
+      <div className="absolute inset-0 bg-background/55 backdrop-blur-sm" />
 
       <div className="relative z-10">
         <AnimatePresence mode="wait">
