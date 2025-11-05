@@ -132,7 +132,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       }
     },
     {
-      text: "Also at Stanford, I was a co-captain of the ultimate frisbee team, led trips to Yosemite, Point Reyes, and Tahoe with the Outdoor Center, and worked at a student-run cafe called On Call.",
+      text: "At Stanford, I was a co-captain of the ultimate frisbee team, led trips to Yosemite, Point Reyes, and Tahoe with the Outdoor Center, and worked at a student-run cafe called On Call.",
       linkWord: "Call",
       popup: {
         image: backgroundImage,
@@ -161,6 +161,14 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       popup: {
         image: backgroundImage,
         caption: "Placeholder caption text"
+      }
+    }, 
+    {
+      text: "The background image to this website is of sunrise on Mt. Whitney when I attempted (unsuccessfully) to summit in Nov. 2023.",
+      linkWord: "Mt. Whitney",
+      popup: {
+        image: backgroundImage,
+        caption: "The upside of not summiting was that I got to see one of the most beautiful sunrises of my life!"
       }
     }
   ];
