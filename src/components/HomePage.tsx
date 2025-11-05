@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Briefcase, Mail, Instagram, Linkedin, Github, Calendar, ExternalLink, ArrowLeft } from 'lucide-react';
+import { BookOpen, Briefcase, Mail, Instagram, Linkedin, Github, Calendar, ArrowLeft } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Dialog, DialogContent } from './ui/dialog';
@@ -17,8 +17,21 @@ interface FactPopup {
   caption: string;
 }
 
+interface ProjectDetails {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  date: string;
+  type: string;
+  fullDescription: string;
+  objectives: string[];
+  outcomes: string[];
+}
+
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [selectedFact, setSelectedFact] = useState<FactPopup | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(null);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -53,9 +66,9 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     } else {
       const element = document.getElementById(id);
       if (element) {
-        const navBarHeight = 80; // Approximate height of nav bar
+        const navBarHeight = 60; // Height of nav bar
         const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - navBarHeight - 40; // Extra 40px padding
+        const offsetPosition = elementPosition - navBarHeight - 20; // Small 20px padding
         
         window.scrollTo({
           top: offsetPosition,
@@ -65,7 +78,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       // Show sticky nav after scrolling past hero section
       const heroHeight = window.innerHeight;
@@ -94,6 +107,18 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Manage body overflow when project modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
 
   const facts = [
     {
@@ -138,14 +163,25 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     }
   ];
 
-  const projects = [
+  const projects: ProjectDetails[] = [
     {
       title: "Lorem Ipsum Project",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
       image: backgroundImage,
       tags: ["Research", "Environmental Science"],
       date: "2024",
-      type: "research"
+      type: "research",
+      fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      objectives: [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Sed do eiusmod tempor incididunt ut labore et dolore",
+        "Ut enim ad minim veniam, quis nostrud exercitation"
+      ],
+      outcomes: [
+        "Duis aute irure dolor in reprehenderit in voluptate",
+        "Excepteur sint occaecat cupidatat non proident",
+        "Sunt in culpa qui officia deserunt mollit anim"
+      ]
     },
     {
       title: "Dolor Sit Analysis",
@@ -153,7 +189,18 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       image: backgroundImage,
       tags: ["iOS", "Swift", "GPS"],
       date: "2024",
-      type: "project"
+      type: "project",
+      fullDescription: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      objectives: [
+        "Quis nostrud exercitation ullamco laboris nisi",
+        "Ut aliquip ex ea commodo consequat duis aute",
+        "Irure dolor in reprehenderit in voluptate velit"
+      ],
+      outcomes: [
+        "Esse cillum dolore eu fugiat nulla pariatur",
+        "Excepteur sint occaecat cupidatat non proident",
+        "Sunt in culpa qui officia deserunt mollit"
+      ]
     },
     {
       title: "Consectetur Initiative",
@@ -161,7 +208,18 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       image: backgroundImage,
       tags: ["Data Science", "D3.js", "Python"],
       date: "2023",
-      type: "project"
+      type: "project",
+      fullDescription: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
+      objectives: [
+        "Reprehenderit in voluptate velit esse cillum",
+        "Dolore eu fugiat nulla pariatur excepteur sint",
+        "Occaecat cupidatat non proident sunt in culpa"
+      ],
+      outcomes: [
+        "Qui officia deserunt mollit anim id est laborum",
+        "Sed ut perspiciatis unde omnis iste natus error",
+        "Sit voluptatem accusantium doloremque laudantium"
+      ]
     },
     {
       title: "Adipiscing Platform",
@@ -169,7 +227,18 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       image: backgroundImage,
       tags: ["React", "Node.js", "Community"],
       date: "2023",
-      type: "project"
+      type: "project",
+      fullDescription: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
+      objectives: [
+        "Cupidatat non proident sunt in culpa qui officia",
+        "Deserunt mollit anim id est laborum sed ut",
+        "Perspiciatis unde omnis iste natus error sit"
+      ],
+      outcomes: [
+        "Voluptatem accusantium doloremque laudantium totam",
+        "Rem aperiam eaque ipsa quae ab illo inventore",
+        "Veritatis et quasi architecto beatae vitae dicta"
+      ]
     }
   ];
 
@@ -255,10 +324,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-4"
               style={{ 
                 fontFamily: '"Faculty Glyphic", sans-serif',
-                color: activeSection === item.id ? '#000000' : 'rgba(255, 255, 255, 0.85)',
+                color: activeSection === item.id ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)',
                 textShadow: activeSection === item.id 
-                  ? '1px 1px 2px rgba(0, 0, 0, 0.2)' 
-                  : '1px 1px 3px rgba(0, 0, 0, 0.4)',
+                  ? '2px 2px 6px rgba(0, 0, 0, 0.8)' 
+                  : '1px 1px 4px rgba(0, 0, 0, 0.6)',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer'
@@ -281,16 +350,16 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             <h1 className="mb-6" style={{ 
               fontSize: '2.5rem', 
               fontWeight: 'bold', 
-              color: '#000000', 
+              color: '#FFFFFF', 
               fontFamily: '"Faculty Glyphic", sans-serif',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)'
             }}>
               Anna Fisher Lopez
             </h1>
             <p className="mb-12 text-lg" style={{ 
-              color: '#000000', 
+              color: '#FFFFFF', 
               fontFamily: '"Faculty Glyphic", sans-serif',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)'
             }}>
             Pursuing AI-driven climate solutions
           </p>
@@ -320,8 +389,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-6"
                   style={{ 
                     fontFamily: '"Faculty Glyphic", sans-serif',
-                    color: '#000000',
-                    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)'
+                    color: '#FFFFFF',
+                    textShadow: '2px 2px 6px rgba(0, 0, 0, 0.8)'
                   }}
                   whileHover={{ scale: 1.1 }}
                 >
@@ -334,7 +403,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </div>
 
       {/* Projects Section */}
-      <div id="projects" className="min-h-screen px-6 pt-32 pb-20">
+      <div id="projects" className="px-6 pt-16 pb-20">
         <div className="max-w-6xl mx-auto">
             <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -347,12 +416,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#000000',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' 
+              color: '#FFFFFF',
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
             }}>Projects & Research</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" style={{ marginBottom: '12rem' }}>
             {projects.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -362,6 +431,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
                 className="group cursor-pointer"
+                onClick={() => setSelectedProject(project)}
               >
                 <div 
                   className="rounded-xl border border-border/50 p-6 h-full relative overflow-hidden"
@@ -377,7 +447,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                     <div className="space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <h3 className="group-hover:text-primary transition-colors" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{project.title}</h3>
-                        <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 mt-1" />
                       </div>
                       
                       <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
@@ -407,7 +476,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </div>
 
       {/* Fun Facts Section */}
-      <div id="funfacts" className="min-h-screen px-6 pt-32 pb-20">
+      <div id="funfacts" className="px-6 pt-16 pb-20">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -420,8 +489,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#000000',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' 
+              color: '#FFFFFF',
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
             }}>Fun Facts</h2>
           </motion.div>
 
@@ -431,7 +500,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="bg-card/70 backdrop-blur-sm rounded-xl border border-border/50 p-8"
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)', marginBottom: '12rem' }}
           >
             <ul className="space-y-6">
               {facts.map((fact, index) => (
@@ -455,7 +524,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </div>
 
       {/* Contact Section */}
-      <div id="contact" className="min-h-screen px-6 pt-32 pb-20">
+      <div id="contact" className="px-6 pt-16 pb-32">
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -468,8 +537,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#000000',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' 
+              color: '#FFFFFF',
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
             }}>Contact Info</h2>
           </motion.div>
 
@@ -539,6 +608,168 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Custom Project Details Overlay */}
+      {selectedProject && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backdropFilter: 'blur(5px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedProject(null);
+            }
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: 'white',
+              maxWidth: '80%',
+              width: '80%',
+              height: '80%',
+              padding: '2rem',
+              position: 'relative',
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              borderRadius: '20px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
+              {/* Image at top */}
+              <div style={{ marginBottom: '2rem' }}>
+                <ImageWithFallback
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+              </div>
+
+              {/* Title and metadata */}
+              <h1 style={{ 
+                fontSize: '2rem', 
+                fontWeight: 'bold', 
+                marginBottom: '1rem',
+                fontFamily: '"Faculty Glyphic", sans-serif'
+              }}>
+                {selectedProject.title}
+              </h1>
+              
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '1rem', 
+                fontSize: '0.875rem',
+                color: '#6b7280',
+                marginBottom: '1rem'
+              }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <Calendar className="h-3 w-3" />
+                  {selectedProject.date}
+                </span>
+                <span style={{ textTransform: 'capitalize' }}>{selectedProject.type}</span>
+              </div>
+
+              {/* Tags */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                {selectedProject.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Overview */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ 
+                  fontSize: '1.125rem', 
+                  fontWeight: '600', 
+                  marginBottom: '0.5rem',
+                  fontFamily: '"Faculty Glyphic", sans-serif'
+                }}>
+                  Overview
+                </h3>
+                <p style={{ 
+                  fontSize: '0.875rem', 
+                  color: '#6b7280', 
+                  lineHeight: '1.625',
+                  fontFamily: '"Faculty Glyphic", sans-serif'
+                }}>
+                  {selectedProject.fullDescription}
+                </p>
+              </div>
+
+              {/* Objectives */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ 
+                  fontSize: '1.125rem', 
+                  fontWeight: '600', 
+                  marginBottom: '0.5rem',
+                  fontFamily: '"Faculty Glyphic", sans-serif'
+                }}>
+                  Objectives
+                </h3>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  {selectedProject.objectives.map((objective, index) => (
+                    <li key={index} style={{ 
+                      display: 'flex', 
+                      alignItems: 'flex-start', 
+                      gap: '0.5rem',
+                      marginBottom: '0.5rem',
+                      fontSize: '0.875rem',
+                      color: '#6b7280'
+                    }}>
+                      <span style={{ color: 'var(--primary)', marginTop: '0.25rem' }}>•</span>
+                      <span style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{objective}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Outcomes */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ 
+                  fontSize: '1.125rem', 
+                  fontWeight: '600', 
+                  marginBottom: '0.5rem',
+                  fontFamily: '"Faculty Glyphic", sans-serif'
+                }}>
+                  Outcomes
+                </h3>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  {selectedProject.outcomes.map((outcome, index) => (
+                    <li key={index} style={{ 
+                      display: 'flex', 
+                      alignItems: 'flex-start', 
+                      gap: '0.5rem',
+                      marginBottom: '0.5rem',
+                      fontSize: '0.875rem',
+                      color: '#6b7280'
+                    }}>
+                      <span style={{ color: 'var(--primary)', marginTop: '0.25rem' }}>•</span>
+                      <span style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
