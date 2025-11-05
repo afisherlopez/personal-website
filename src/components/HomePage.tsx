@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Briefcase, Mail, Instagram, Linkedin, Github, Calendar, ArrowLeft } from 'lucide-react';
+import { BookOpen, Briefcase, Mail, Linkedin, Github, Calendar, ArrowLeft } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Dialog, DialogContent } from './ui/dialog';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Page } from '../App';
 import backgroundImage from '../images/mt-whitney-background.JPG';
+import mysteriesYes from '../images/mysteries-yes.png';
 
 interface HomePageProps {
   onNavigate: (page: Page) => void;
@@ -44,7 +45,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     {
       id: 'funfacts',
       icon: BookOpen,
-      label: 'Fun Facts'
+      label: 'About Me'
     },
     {
       id: 'contact',
@@ -56,7 +57,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   const allNavigationItems = [
     { id: 'home', label: 'Home' },
     { id: 'projects', label: 'Projects & Research' },
-    { id: 'funfacts', label: 'Fun Facts' },
+    { id: 'funfacts', label: 'About Me' },
     { id: 'contact', label: 'Contact Info' }
   ];
 
@@ -120,42 +121,43 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     };
   }, [selectedProject]);
 
+  //Content for About Me Section
   const facts = [
     {
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      linkWord: "ipsum",
+      text: "At Stanford, I studied Physics (B.S. '25) and Computer Science (M.S. '26), focusing on climate impact and renewable energy!",
+      linkWord: "renewable energy",
+      popup: {
+        image: "../images/mysteries-yes.png",
+        caption: "Working with Acterra to guide electric home tours in Menlo Park"
+      }
+    },
+    {
+      text: "Also at Stanford, I was a co-captain of the ultimate frisbee team, led trips to Yosemite, Point Reyes, and Tahoe with the Outdoor Center, and worked at a student-run cafe called On Call.",
+      linkWord: "Call",
       popup: {
         image: backgroundImage,
         caption: "Placeholder caption text"
       }
     },
     {
-      text: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      linkWord: "tempor",
+      text: "Originally from Takoma Park, Maryland, the West captured my heart and I plan to live in SF or Seattle for the foreseeable future.",
+      linkWord: "SF",
       popup: {
         image: backgroundImage,
         caption: "Placeholder caption text"
       }
     },
     {
-      text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      linkWord: "veniam",
+      text: "My favorite poem is 'Mysteries, Yes' by Mary Oliver.",
+      linkWord: "Mysteries, Yes",
       popup: {
         image: backgroundImage,
         caption: "Placeholder caption text"
       }
     },
     {
-      text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
-      linkWord: "dolor",
-      popup: {
-        image: backgroundImage,
-        caption: "Placeholder caption text"
-      }
-    },
-    {
-      text: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
-      linkWord: "cupidatat",
+      text: "When I was 19 I competed in the Junior World Ultimate Championships in Poland! We won!",
+      linkWord: "We won!",
       popup: {
         image: backgroundImage,
         caption: "Placeholder caption text"
@@ -475,7 +477,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </div>
 
-      {/* Fun Facts Section */}
+      {/* About Me Section */}
       <div id="funfacts" className="px-6 pt-16 pb-20">
         <div className="max-w-3xl mx-auto">
           <motion.div
@@ -491,7 +493,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               fontWeight: 'bold',
               color: '#FFFFFF',
               textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
-            }}>Fun Facts</h2>
+            }}>About Me</h2>
           </motion.div>
 
           <motion.div
@@ -591,7 +593,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </div>
 
-      {/* Dialog for Fun Facts */}
+      {/* Dialog for About Me */}
       <Dialog open={!!selectedFact} onOpenChange={() => setSelectedFact(null)}>
         <DialogContent className="max-w-md">
           {selectedFact && (
