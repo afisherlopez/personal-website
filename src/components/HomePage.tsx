@@ -26,6 +26,8 @@ interface ProjectDetails {
   date: string;
   type: string;
   fullDescription: string;
+  linkWords?: string[];
+  links?: string[];
   objectives: string[];
   outcomes: string[];
 }
@@ -175,13 +177,15 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   const projects: ProjectDetails[] = [
     {
-      title: "Lorem Ipsum Project",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+      title: "Climate Modeling & Gravity Waves",
+      description: "Improving climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
       image: backgroundImage,
-      tags: ["Research", "Environmental Science"],
+      tags: ["Climate Modeling", "ML"],
       date: "2024",
       type: "research",
-      fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      fullDescription: "I worked in Aditi Sheshadri's lab in collaboration with an international project called DataWave to train an Attention U-Net model to predict gravity waves in three dimensions instead of one, as is customary for current climate models.",
+      linkWords: ["DataWave"],
+      links: ["https://datawaveproject.github.io"],
       objectives: [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         "Sed do eiusmod tempor incididunt ut labore et dolore",
@@ -291,6 +295,44 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         {parts[1]}
       </>
     );
+  };
+
+  const renderProjectDescription = (project: ProjectDetails) => {
+    if (!project.linkWords || !project.links || project.linkWords.length === 0) {
+      return project.fullDescription;
+    }
+
+    let text = project.fullDescription;
+    const elements: React.ReactNode[] = [];
+    
+    // Process each linkWord
+    project.linkWords.forEach((linkWord, index) => {
+      const parts = text.split(linkWord);
+      if (parts.length > 1) {
+        elements.push(parts[0]);
+        elements.push(
+          <a
+            key={`link-${index}`}
+            href={project.links![index]}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              color: '#2563eb', 
+              textDecoration: 'underline', 
+              fontFamily: '"Faculty Glyphic", sans-serif' 
+            }}
+          >
+            {linkWord}
+          </a>
+        );
+        text = parts.slice(1).join(linkWord);
+      }
+    });
+    
+    // Add remaining text
+    elements.push(text);
+    
+    return <>{elements}</>;
   };
 
   return (
@@ -719,7 +761,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   lineHeight: '1.625',
                   fontFamily: '"Faculty Glyphic", sans-serif'
                 }}>
-                  {selectedProject.fullDescription}
+                  {renderProjectDescription(selectedProject)}
                 </p>
               </div>
 
