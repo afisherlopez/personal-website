@@ -424,11 +424,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             className="w-full max-w-5xl mx-auto"
           >
             <div
-              className="flex justify-between items-center py-5 px-16 border border-border/50 backdrop-blur-sm"
+              className="flex justify-between items-center py-5 px-16 backdrop-blur-sm"
               style={{ 
                 backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                borderRadius: '16px'
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                borderRadius: '16px',
+                border: '1px solid rgba(255, 255, 255, 0.2)'
               }}
         >
           {navigationItems.map((item, index) => (
