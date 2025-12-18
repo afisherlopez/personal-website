@@ -424,10 +424,9 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             className="w-full max-w-5xl mx-auto"
           >
             <div
-              className="flex justify-between items-center py-5 px-16 backdrop-blur-sm"
+              className="hero-nav-bar flex justify-between items-center py-5 px-16 backdrop-blur-sm"
               style={{ 
                 backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
                 borderRadius: '16px',
                 border: '1px solid rgba(255, 255, 255, 0.2)'
               }}
