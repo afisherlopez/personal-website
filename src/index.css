@@ -1835,14 +1835,27 @@ html {
   }
 }
 
-/* Hero Navigation Bar - Default style for Chrome/Desktop */
+/* Cross-browser consistent drop shadows using filter instead of text-shadow/box-shadow */
 .hero-nav-bar {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.04));
 }
 
-/* Override for Safari/iOS (WebKit) - reduce opacity to compensate for darker rendering */
-@supports (-webkit-touch-callout: none) {
-  .hero-nav-bar {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  }
+.text-shadow-heavy {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.text-shadow-medium {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.text-shadow-light {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.35));
 }

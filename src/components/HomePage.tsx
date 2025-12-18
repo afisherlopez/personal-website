@@ -373,13 +373,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-4"
+              className={`text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-4 ${activeSection === item.id ? 'text-shadow-medium' : 'text-shadow-light'}`}
               style={{ 
                 fontFamily: '"Faculty Glyphic", sans-serif',
                 color: activeSection === item.id ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)',
-                textShadow: activeSection === item.id 
-                  ? '2px 2px 6px rgba(0, 0, 0, 0.8)' 
-                  : '1px 1px 4px rgba(0, 0, 0, 0.6)',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer'
@@ -399,19 +396,17 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-            <h1 className="mb-6" style={{ 
+            <h1 className="mb-6 text-shadow-heavy" style={{ 
               fontSize: '2.5rem', 
               fontWeight: 'bold', 
               color: '#FFFFFF', 
-              fontFamily: '"Faculty Glyphic", sans-serif',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)'
+              fontFamily: '"Faculty Glyphic", sans-serif'
             }}>
               Anna Fisher Lopez
             </h1>
-            <p className="mb-12 text-lg" style={{ 
+            <p className="mb-12 text-lg text-shadow-heavy" style={{ 
               color: '#FFFFFF', 
-              fontFamily: '"Faculty Glyphic", sans-serif',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)'
+              fontFamily: '"Faculty Glyphic", sans-serif'
             }}>
             Pursuing AI-driven climate solutions
           </p>
@@ -438,11 +433,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-6"
+                  className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-6 text-shadow-medium"
                   style={{ 
                     fontFamily: '"Faculty Glyphic", sans-serif',
-                    color: '#FFFFFF',
-                    textShadow: '2px 2px 6px rgba(0, 0, 0, 0.8)'
+                    color: '#FFFFFF'
                   }}
                   whileHover={{ scale: 1.1 }}
                 >
@@ -464,12 +458,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="mb-8" style={{ 
+            <h2 className="mb-8 text-shadow-heavy" style={{ 
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#FFFFFF',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
+              color: '#FFFFFF'
             }}>Projects & Research</h2>
           </motion.div>
 
@@ -537,12 +530,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="mb-8" style={{ 
+            <h2 className="mb-8 text-shadow-heavy" style={{ 
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#FFFFFF',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
+              color: '#FFFFFF'
             }}>About Me</h2>
           </motion.div>
 
@@ -585,12 +577,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="mb-8" style={{ 
+            <h2 className="mb-8 text-shadow-heavy" style={{ 
               fontFamily: '"Faculty Glyphic", sans-serif', 
               fontSize: '2.25rem',
               fontWeight: 'bold',
-              color: '#FFFFFF',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' 
+              color: '#FFFFFF'
             }}>Contact Info</h2>
           </motion.div>
 
