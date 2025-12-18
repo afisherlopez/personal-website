@@ -548,7 +548,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </div>
 
       {/* Contact Section */}
-      <div id="contact" className="px-6 pt-16 pb-32">
+      <div id="contact" className="px-6 pt-16 pb-32" style={{ minHeight: '100vh' }}>
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
