@@ -486,7 +486,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             className="text-center mb-8 text-lg text-white"
             style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}
           >
-            For more, check out my resume{' '}
+            This section is under construction - for more, check out my resume{' '}
             <a
               href="/Resume.pdf"
               target="_blank"
