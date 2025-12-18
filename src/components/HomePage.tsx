@@ -501,7 +501,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </div>
 
       {/* About Me Section */}
-      <div id="funfacts" className="px-6 pt-16 pb-20">
+      <div id="funfacts" className="px-6 pb-20" style={{ paddingTop: '1rem' }}>
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
