@@ -1,6 +1,5 @@
 import React from "react";
 import HomePage from "./components/HomePage";
-import backgroundImage from "./images/mt-whitney-background.JPG";
 
 export type Page = "home" | "funfacts" | "projects" | "contact";
 
@@ -9,7 +8,7 @@ export default function App() {
     <div
       className="min-h-screen relative"
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url('/images/mt-whitney-background.JPG')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",

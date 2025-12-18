@@ -6,8 +6,6 @@ import { Badge } from './ui/badge';
 import { Dialog, DialogContent } from './ui/dialog';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Page } from '../App';
-import backgroundImage from '../images/mt-whitney-background.JPG';
-import mysteriesYes from '../images/mysteries-yes.png';
 
 interface HomePageProps {
   onNavigate: (page: Page) => void;
@@ -28,8 +26,10 @@ interface ProjectDetails {
   fullDescription: string;
   linkWords?: string[];
   links?: string[];
-  objectives: string[];
   outcomes: string[];
+  moreInfoText?: string;
+  moreInfoUrl?: string;
+  extraImages?: { src: string; caption?: string }[];
 }
 
 export default function HomePage({ onNavigate }: HomePageProps) {
@@ -129,47 +129,47 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       text: "At Stanford, I studied Physics (B.S. '25) and Computer Science (M.S. '26), focusing on climate impact and renewable energy!",
       linkWord: "renewable energy",
       popup: {
-        image: "../images/mysteries-yes.png",
-        caption: "Working with Acterra to guide electric home tours in Menlo Park"
+        image: '',
+        caption: ""
       }
     },
     {
       text: "At Stanford, I was a co-captain of the ultimate frisbee team, led trips to Yosemite, Point Reyes, and Tahoe with the Outdoor Center, and worked at a student-run cafe called On Call.",
-      linkWord: "Call",
+      linkWord: "Yosemite",
       popup: {
-        image: backgroundImage,
-        caption: "Placeholder caption text"
+        image: '/images/about-me/yosemite.png',
+        caption: "That's me on the right!"
       }
     },
     {
-      text: "Originally from Takoma Park, Maryland, the West captured my heart and I plan to live in SF or Seattle for the foreseeable future.",
+      text: "While I'm originally from Takoma Park, Maryland, I plan to live in SF or Seattle for the foreseeable future.",
       linkWord: "SF",
       popup: {
-        image: backgroundImage,
-        caption: "Placeholder caption text"
+        image: '/images/about-me/biking-ggb.png',
+        caption: "Right after biking across the Golden Gate Bridge!"
       }
     },
     {
-      text: "My favorite poem is 'Mysteries, Yes' by Mary Oliver.",
+      text: "Everyone should know 'Mysteries, Yes' by Mary Oliver.",
       linkWord: "Mysteries, Yes",
       popup: {
-        image: backgroundImage,
-        caption: "Placeholder caption text"
+        image: '/images/about-me/mysteries-yes.png',
+        caption: ""
       }
     },
     {
       text: "When I was 19 I competed in the Junior World Ultimate Championships in Poland! We won!",
       linkWord: "We won!",
       popup: {
-        image: backgroundImage,
-        caption: "Placeholder caption text"
+        image: '/images/about-me/frisbee.png',
+        caption: "Frisbee has been a defining part of my life since middle school."
       }
     }, 
     {
       text: "The background image to this website is of sunrise on Mt. Whitney when I attempted (unsuccessfully) to summit in Nov. 2023.",
       linkWord: "Mt. Whitney",
       popup: {
-        image: backgroundImage,
+        image: '/images/mt-whitney-background.JPG',
         caption: "The upside of not summiting was that I got to see one of the most beautiful sunrises of my life!"
       }
     }
@@ -177,58 +177,47 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   const projects: ProjectDetails[] = [
     {
-      title: "Climate Modeling & Gravity Waves",
-      description: "Improving climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
-      image: backgroundImage,
-      tags: ["Climate Modeling", "ML"],
-      date: "2024",
+      title: "Bat Dictionary",
+      description: "Used Graph Attention Transformers to identify groups of bat calls.",
+      image: '/images/projects/bats.jpg',
+      tags: ["Graph Attention Transformers", "GNNs", "Acoustic Signals"],
+      date: "2025",
       type: "research",
-      fullDescription: "I worked in Aditi Sheshadri's lab in collaboration with an international project called DataWave to train an Attention U-Net model to predict gravity waves in three dimensions instead of one, as is customary for current climate models.",
-      linkWords: ["DataWave"],
-      links: ["https://datawaveproject.github.io"],
-      objectives: [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        "Sed do eiusmod tempor incididunt ut labore et dolore",
-        "Ut enim ad minim veniam, quis nostrud exercitation"
-      ],
+      fullDescription: "In collaboration with Andreas Paepcke at Stanford, I developed two approaches to clustering sequences of bat chirps into groups using Graph Attention Transformers (GAT). I found that using an end-to-end approach of sequence embedding optimization (using DMoN loss as described in this paper) outperformed traditional methods of clustering on frozen GAT embeddings. Check out this Medium article I wrote about the project or the GitHub repo for more details!",
+      linkWords: ["this", "Medium article", "GitHub repo"],
+      links: ["https://arxiv.org/abs/2006.16904","https://medium.com/@annafisherlopez/bat-banter-using-unsupervised-graph-based-clustering-to-discover-phrases-in-bat-communication-b5e11145dbe6", "https://github.com/afisherlopez/BatDictionary"],
+      
       outcomes: [
-        "Duis aute irure dolor in reprehenderit in voluptate",
-        "Excepteur sint occaecat cupidatat non proident",
-        "Sunt in culpa qui officia deserunt mollit anim"
+        "Identified clear clusters of bat calls with high potential for further analysis by ML researchers and bat biologists",
+        "Showed that end-to-end optimization (using DMoN loss) outperforms traditional clustering methods on frozen GAT embeddings",
+        "Received a $1260 grant from the A.W. Mellon Foundation to continue the work."
+      ], 
+      extraImages: [
+        { src: '/images/projects/bat-graphs.webp', caption: 'Visualization of clusters of bat chirps using the baseline approach - notice the two clear clusters! Much more to explore alongside bat biologists. ' }
       ]
     },
     {
-      title: "Dolor Sit Analysis",
-      description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.",
-      image: backgroundImage,
-      tags: ["iOS", "Swift", "GPS"],
+      title: "Climate Modeling & Gravity Waves",
+      description: "Improving climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
+      image: '/images/projects/datawave.png',
+      tags: ["Climate Modeling", "ML"],
       date: "2024",
-      type: "project",
-      fullDescription: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      objectives: [
-        "Quis nostrud exercitation ullamco laboris nisi",
-        "Ut aliquip ex ea commodo consequat duis aute",
-        "Irure dolor in reprehenderit in voluptate velit"
-      ],
+      type: "research",
+      fullDescription: "I worked in Aditi Sheshadri's lab in collaboration with an international project called DataWave to train an Attention U-Net model to improve gravity waves parameterization in three dimensions. More than anything, this project taught me how to work with massive amounts of data. We moved terabytes of ERA5 data on and off of virtual servers to compute momentum fluxes and train the U-Net model.",
+      linkWords: ["DataWave"],
+      links: ["https://datawaveproject.github.io"],
       outcomes: [
-        "Esse cillum dolore eu fugiat nulla pariatur",
-        "Excepteur sint occaecat cupidatat non proident",
-        "Sunt in culpa qui officia deserunt mollit"
+        "Suceeded in computing momentum fluxes from 10 years of ERA5 data without blowing up anyone's servers in the process."
       ]
     },
     {
       title: "Consectetur Initiative",
       description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.",
-      image: backgroundImage,
+      image: '/images/mt-whitney-background.JPG',
       tags: ["Data Science", "D3.js", "Python"],
       date: "2023",
       type: "project",
       fullDescription: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
-      objectives: [
-        "Reprehenderit in voluptate velit esse cillum",
-        "Dolore eu fugiat nulla pariatur excepteur sint",
-        "Occaecat cupidatat non proident sunt in culpa"
-      ],
       outcomes: [
         "Qui officia deserunt mollit anim id est laborum",
         "Sed ut perspiciatis unde omnis iste natus error",
@@ -238,16 +227,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     {
       title: "Adipiscing Platform",
       description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.",
-      image: backgroundImage,
+      image: '/images/mt-whitney-background.JPG',
       tags: ["React", "Node.js", "Community"],
       date: "2023",
       type: "project",
       fullDescription: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
-      objectives: [
-        "Cupidatat non proident sunt in culpa qui officia",
-        "Deserunt mollit anim id est laborum sed ut",
-        "Perspiciatis unde omnis iste natus error sit"
-      ],
       outcomes: [
         "Voluptatem accusantium doloremque laudantium totam",
         "Rem aperiam eaque ipsa quae ab illo inventore",
@@ -287,8 +271,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         {parts[0]}
         <button
           onClick={() => setSelectedFact(fact.popup)}
-          className="text-primary underline hover:text-primary/80 transition-colors cursor-pointer"
-          style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}
+          className="underline hover:opacity-80 transition-colors cursor-pointer"
+          style={{ 
+            fontFamily: '"Faculty Glyphic", sans-serif',
+            fontSize: 'inherit',
+            color: '#2d5a3d'
+          }}
         >
           {fact.linkWord}
         </button>
@@ -636,15 +624,16 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
       {/* Dialog for About Me */}
       <Dialog open={!!selectedFact} onOpenChange={() => setSelectedFact(null)}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-fit w-auto p-4">
           {selectedFact && (
             <div className="space-y-4">
               <ImageWithFallback
                 src={selectedFact.image}
                 alt="Fun fact illustration"
-                className="w-full h-64 object-cover rounded-lg"
+                className="max-h-[70vh] w-auto rounded-lg"
+                style={{ objectFit: 'contain' }}
               />
-              <p className="text-center text-muted-foreground" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
+              <p className="text-center text-muted-foreground max-w-md mx-auto" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
                 {selectedFact.caption}
               </p>
             </div>
@@ -756,33 +745,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 </p>
               </div>
 
-              {/* Objectives */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{ 
-                  fontSize: '1.125rem', 
-                  fontWeight: '600', 
-                  marginBottom: '0.5rem',
-                  fontFamily: '"Faculty Glyphic", sans-serif'
-                }}>
-                  Objectives
-                </h3>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {selectedProject.objectives.map((objective, index) => (
-                    <li key={index} style={{ 
-                      display: 'flex', 
-                      alignItems: 'flex-start', 
-                      gap: '0.5rem',
-                      marginBottom: '0.5rem',
-                      fontSize: '0.875rem',
-                      color: '#6b7280'
-                    }}>
-                      <span style={{ color: 'var(--primary)', marginTop: '0.25rem' }}>•</span>
-                      <span style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{objective}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
               {/* Outcomes */}
               <div style={{ marginBottom: '1.5rem' }}>
                 <h3 style={{ 
@@ -809,6 +771,75 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   ))}
                 </ul>
               </div>
+
+              {/* Extra Images */}
+              {selectedProject.extraImages && selectedProject.extraImages.length > 0 && (
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                    {selectedProject.extraImages.map((img, index) => (
+                      <div key={index} style={{ flex: '1 1 calc(50% - 0.5rem)', minWidth: '200px' }}>
+                        <ImageWithFallback
+                          src={img.src}
+                          alt={img.caption || `Project image ${index + 1}`}
+                          className="w-full h-auto rounded-lg"
+                          style={{ objectFit: 'contain' }}
+                        />
+                        {img.caption && (
+                          <p style={{ 
+                            fontSize: '0.75rem', 
+                            color: '#6b7280', 
+                            marginTop: '0.5rem',
+                            textAlign: 'center',
+                            fontFamily: '"Faculty Glyphic", sans-serif'
+                          }}>
+                            {img.caption}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* More Info */}
+              {(selectedProject.moreInfoText || selectedProject.moreInfoUrl) && (
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ 
+                    fontSize: '1.125rem', 
+                    fontWeight: '600', 
+                    marginBottom: '0.5rem',
+                    fontFamily: '"Faculty Glyphic", sans-serif'
+                  }}>
+                    More Info
+                  </h3>
+                  {selectedProject.moreInfoText && (
+                    <p style={{ 
+                      fontSize: '0.875rem', 
+                      color: '#6b7280', 
+                      lineHeight: '1.625',
+                      fontFamily: '"Faculty Glyphic", sans-serif',
+                      marginBottom: '0.5rem'
+                    }}>
+                      {selectedProject.moreInfoText}
+                    </p>
+                  )}
+                  {selectedProject.moreInfoUrl && (
+                    <a
+                      href={selectedProject.moreInfoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ 
+                        color: '#2563eb', 
+                        textDecoration: 'underline', 
+                        fontSize: '0.875rem',
+                        fontFamily: '"Faculty Glyphic", sans-serif'
+                      }}
+                    >
+                      {selectedProject.moreInfoUrl}
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
