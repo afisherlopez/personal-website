@@ -209,34 +209,6 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       outcomes: [
         "Suceeded in computing momentum fluxes from 10 years of ERA5 data without blowing up anyone's servers in the process."
       ]
-    },
-    {
-      title: "Consectetur Initiative",
-      description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.",
-      image: '/images/mt-whitney-background.JPG',
-      tags: ["Data Science", "D3.js", "Python"],
-      date: "2023",
-      type: "project",
-      fullDescription: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
-      outcomes: [
-        "Qui officia deserunt mollit anim id est laborum",
-        "Sed ut perspiciatis unde omnis iste natus error",
-        "Sit voluptatem accusantium doloremque laudantium"
-      ]
-    },
-    {
-      title: "Adipiscing Platform",
-      description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.",
-      image: '/images/mt-whitney-background.JPG',
-      tags: ["React", "Node.js", "Community"],
-      date: "2023",
-      type: "project",
-      fullDescription: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
-      outcomes: [
-        "Voluptatem accusantium doloremque laudantium totam",
-        "Rem aperiam eaque ipsa quae ab illo inventore",
-        "Veritatis et quasi architecto beatae vitae dicta"
-      ]
     }
   ];
 
@@ -454,7 +426,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             }}>Projects & Research</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" style={{ marginBottom: '12rem' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" style={{ paddingBottom: '3rem' }}>
             {projects.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -505,6 +477,26 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               </motion.div>
             ))}
           </div>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-8 text-lg text-white"
+            style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}
+          >
+            For more, check out my resume{' '}
+            <a
+              href="/Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-blue-300 transition-colors"
+            >
+              here
+            </a>
+            !
+          </motion.p>
         </div>
       </div>
 
@@ -616,7 +608,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             className="text-center mt-8"
           >
             <p className="text-sm text-muted-foreground" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-              Always happy to chat about mountains, technology, or anything in between
+              
             </p>
         </motion.div>
         </div>
