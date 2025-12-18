@@ -127,10 +127,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   const facts = [
     {
       text: "At Stanford, I studied Physics (B.S. '25) and Computer Science (M.S. '26), focusing on climate impact and renewable energy!",
-      linkWord: "renewable energy",
+      linkWord: "studied",
       popup: {
-        image: '',
-        caption: ""
+        image: '/images/about-me/lakeside.png',
+        caption: "Lakeside Dining = Hogwarts Great Hall"
       }
     },
     {
