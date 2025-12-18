@@ -198,12 +198,12 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     },
     {
       title: "Climate Modeling & Gravity Waves",
-      description: "Improving climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
+      description: "Improved climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
       image: '/images/projects/datawave.png',
       tags: ["Climate Modeling", "ML"],
       date: "2024",
       type: "research",
-      fullDescription: "I worked in Aditi Sheshadri's lab in collaboration with an international project called DataWave to train an Attention U-Net model to improve gravity waves parameterization in three dimensions. More than anything, this project taught me how to work with massive amounts of data. We moved terabytes of ERA5 data on and off of virtual servers to compute momentum fluxes and train the U-Net model.",
+      fullDescription: "I worked in Aditi Sheshadri's lab at Stanford in collaboration with an international project called DataWave to train an Attention U-Net model to improve the parameterization of gravity waves in three dimensions. More than anything, this project taught me how to work with massive amounts of data. With the guidance of my advisor, Aman Gupta, I learned to move terabytes of ERA5 data on and off of virtual servers to compute momentum fluxes and train the U-Net model.",
       linkWords: ["DataWave"],
       links: ["https://datawaveproject.github.io"],
       outcomes: [
