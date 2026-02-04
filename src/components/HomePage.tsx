@@ -426,6 +426,60 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             }}>Projects & Research</h2>
           </motion.div>
 
+          {/* Roundtable Link */}
+          <motion.a
+            href="https://roundtable.annafisherlopez.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.05 }}
+            className="flex flex-col items-center justify-center mb-12 cursor-pointer group"
+          >
+            <div 
+              className="rounded-xl p-6 transition-all duration-300 group-hover:shadow-xl"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}
+            >
+              <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
+                {/* Blue blob - top */}
+                <path 
+                  d="M60 8 C45 8, 38 18, 38 28 C38 38, 45 45, 55 45 C55 45, 50 42, 50 38 C50 34, 55 32, 60 32 C65 32, 70 34, 70 38 C70 42, 65 45, 65 45 C75 45, 82 38, 82 28 C82 18, 75 8, 60 8 Z" 
+                  fill="#4A90D9" 
+                  stroke="#2D2D2D" 
+                  strokeWidth="2.5"
+                />
+                {/* Green blob - bottom left */}
+                <path 
+                  d="M8 65 C8 50, 15 45, 25 45 C32 45, 38 48, 42 55 C42 55, 40 50, 44 48 C48 46, 52 50, 52 55 C52 60, 48 65, 48 65 C52 72, 48 85, 38 95 C28 105, 15 105, 10 95 C5 85, 8 75, 8 65 Z" 
+                  fill="#3DAA8C" 
+                  stroke="#2D2D2D" 
+                  strokeWidth="2.5"
+                />
+                {/* Purple blob - bottom right */}
+                <path 
+                  d="M112 65 C112 50, 105 45, 95 45 C88 45, 82 48, 78 55 C78 55, 80 50, 76 48 C72 46, 68 50, 68 55 C68 60, 72 65, 72 65 C68 72, 72 85, 82 95 C92 105, 105 105, 110 95 C115 85, 112 75, 112 65 Z" 
+                  fill="#8B5FC7" 
+                  stroke="#2D2D2D" 
+                  strokeWidth="2.5"
+                />
+                {/* White circular table - center */}
+                <circle 
+                  cx="60" 
+                  cy="60" 
+                  r="30" 
+                  fill="#F8F6F0" 
+                  stroke="#2D2D2D" 
+                  strokeWidth="2.5"
+                />
+              </svg>
+              <p className="text-center mt-3 font-medium group-hover:text-blue-600 transition-colors" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
+                Roundtable
+              </p>
+            </div>
+          </motion.a>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" style={{ paddingBottom: '3rem' }}>
             {projects.map((project, index) => (
               <motion.div
