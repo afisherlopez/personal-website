@@ -1,25 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomePage from "./components/HomePage";
+import { defaultPage, navItems, type PageId } from "./content/homePageContent";
 
-export type Page = "home" | "funfacts" | "projects" | "contact";
+const pageIds = new Set(navItems.map((item) => item.id));
+
+function normalizeHash(hash: string): string {
+  return hash.replace(/^#\/?/, "").trim().toLowerCase();
+}
+
+function getPageFromHash(): PageId {
+  const candidate = normalizeHash(window.location.hash);
+
+  if (pageIds.has(candidate as PageId)) {
+    return candidate as PageId;
+  }
+
+  return defaultPage;
+}
 
 export default function App() {
-  return (
-    <div
-      className="min-h-screen relative"
-      style={{
-        backgroundImage: `url('/images/mt-whitney-background.JPG')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
-      {/* Overlay to make background more visible - reduced from 85% to 55% */}
-      <div className="absolute inset-0 bg-background/55 backdrop-blur-sm" />
+  const [currentPage, setCurrentPage] = useState<PageId>(defaultPage);
 
-      <div className="relative z-10">
-        <HomePage onNavigate={() => {}} />
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    const syncFromHash = () => {
+      const nextPage = getPageFromHash();
+      setCurrentPage(nextPage);
+
+      const normalized = normalizeHash(window.location.hash);
+      if (normalized !== nextPage) {
+        window.history.replaceState(null, "", `#/${nextPage}`);
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [currentPage]);
+
+  return <HomePage currentPage={currentPage} />;
 }

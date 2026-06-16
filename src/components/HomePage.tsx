@@ -1,895 +1,194 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { BookOpen, Briefcase, Mail, Linkedin, Github, Calendar, ArrowLeft } from 'lucide-react';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Dialog, DialogContent } from './ui/dialog';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import type { Page } from '../App';
+import React from "react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import SiteHeader from "./layout/SiteHeader";
+import {
+  aboutSection,
+  footerPrimaryLinks,
+  pageSections,
+  type PageId,
+} from "../content/homePageContent";
+
+const sharedParagraphStyle = {
+  fontSize: "0.8rem",
+  lineHeight: 1.55,
+  color: "#2d3748",
+  marginBottom: "0.6rem",
+  fontFamily: '"Faculty Glyphic", sans-serif',
+};
 
 interface HomePageProps {
-  onNavigate: (page: Page) => void;
+  currentPage: PageId;
 }
 
-interface FactPopup {
-  image: string;
-  caption: string;
-}
-
-interface ProjectDetails {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  date: string;
-  type: string;
-  fullDescription: string;
-  linkWords?: string[];
-  links?: string[];
-  outcomes: string[];
-  moreInfoText?: string;
-  moreInfoUrl?: string;
-  extraImages?: { src: string; caption?: string }[];
-}
-
-export default function HomePage({ onNavigate }: HomePageProps) {
-  const [selectedFact, setSelectedFact] = useState<FactPopup | null>(null);
-  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(null);
-  const [showStickyNav, setShowStickyNav] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-
-  const navigationItems = [
-    {
-      id: 'projects',
-      icon: Briefcase,
-      label: 'Projects & Research'
-    },
-    {
-      id: 'funfacts',
-      icon: BookOpen,
-      label: 'About Me'
-    },
-    {
-      id: 'contact',
-      icon: Mail,
-      label: 'Contact Info'
-    }
-  ];
-
-  const allNavigationItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'projects', label: 'Projects & Research' },
-    { id: 'funfacts', label: 'About Me' },
-    { id: 'contact', label: 'Contact Info' }
-  ];
-
-  const scrollToSection = (id: string) => {
-    if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const element = document.getElementById(id);
-      if (element) {
-        const navBarHeight = 60; // Height of nav bar
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - navBarHeight - 20; // Small 20px padding
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show sticky nav after scrolling past hero section
-      const heroHeight = window.innerHeight;
-      setShowStickyNav(window.scrollY > heroHeight * 0.8);
-
-      // Determine active section
-      const scrollPosition = window.scrollY + 200;
-      
-      if (scrollPosition < heroHeight) {
-        setActiveSection('home');
-      } else {
-        const sections = ['projects', 'funfacts', 'contact'];
-        for (const section of sections) {
-          const element = document.getElementById(section);
-          if (element) {
-            const { offsetTop, offsetHeight } = element;
-            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-              setActiveSection(section);
-              break;
-            }
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Manage body overflow when project modal is open
-  useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedProject]);
-
-  //Content for About Me Section
-  const facts = [
-    {
-      text: "At Stanford, I studied Physics (B.S. '25) and Computer Science (M.S. '26), focusing on climate impact and renewable energy!",
-      linkWord: "studied",
-      popup: {
-        image: '/images/about-me/lakeside.png',
-        caption: "Lakeside Dining = Hogwarts Great Hall"
-      }
-    },
-    {
-      text: "At Stanford, I was a co-captain of the ultimate frisbee team, led trips to Yosemite, Point Reyes, and Tahoe with the Outdoor Center, and worked at a student-run cafe called On Call.",
-      linkWord: "Yosemite",
-      popup: {
-        image: '/images/about-me/yosemite.png',
-        caption: "That's me on the right!"
-      }
-    },
-    {
-      text: "While I'm originally from Takoma Park, Maryland, I plan to live in SF or Seattle for the foreseeable future.",
-      linkWord: "SF",
-      popup: {
-        image: '/images/about-me/biking-ggb.png',
-        caption: "Right after biking across the Golden Gate Bridge!"
-      }
-    },
-    {
-      text: "Everyone should know 'Mysteries, Yes' by Mary Oliver.",
-      linkWord: "Mysteries, Yes",
-      popup: {
-        image: '/images/about-me/mysteries-yes.png',
-        caption: ""
-      }
-    },
-    {
-      text: "When I was 19 I competed in the Junior World Ultimate Championships in Poland! We won!",
-      linkWord: "We won!",
-      popup: {
-        image: '/images/about-me/frisbee.png',
-        caption: "Frisbee has been a defining part of my life since middle school."
-      }
-    }, 
-    {
-      text: "The background image to this website is of sunrise on Mt. Whitney when I attempted (unsuccessfully) to summit in Nov. 2023.",
-      linkWord: "Mt. Whitney",
-      popup: {
-        image: '/images/mt-whitney-background.JPG',
-        caption: "The upside of not summiting was that I got to see one of the most beautiful sunrises of my life!"
-      }
-    }
-  ];
-
-  const projects: ProjectDetails[] = [
-    {
-      title: "Bat Dictionary",
-      description: "Used Graph Attention Transformers to identify groups of bat calls.",
-      image: '/images/projects/bats.jpg',
-      tags: ["Graph Attention Transformers", "GNNs", "Acoustic Signals"],
-      date: "2025",
-      type: "research",
-      fullDescription: "In collaboration with Andreas Paepcke at Stanford, I developed two approaches to clustering sequences of bat chirps into groups using Graph Attention Transformers (GAT). I found that using an end-to-end approach of sequence embedding optimization (using DMoN loss as described in this paper) outperformed traditional methods of clustering on frozen GAT embeddings. Check out this Medium article I wrote about the project or the GitHub repo for more details!",
-      linkWords: ["this", "Medium article", "GitHub repo"],
-      links: ["https://arxiv.org/abs/2006.16904","https://medium.com/@annafisherlopez/bat-banter-using-unsupervised-graph-based-clustering-to-discover-phrases-in-bat-communication-b5e11145dbe6", "https://github.com/afisherlopez/BatDictionary"],
-      
-      outcomes: [
-        "Identified clear clusters of bat calls with high potential for further analysis by ML researchers and bat biologists",
-        "Showed that end-to-end optimization (using DMoN loss) outperforms traditional clustering methods on frozen GAT embeddings",
-        "Received a $1260 grant from the A.W. Mellon Foundation to continue the work."
-      ], 
-      extraImages: [
-        { src: '/images/projects/bat-graphs.webp', caption: 'Visualization of clusters of bat chirps using the baseline approach - notice the two clear clusters! Much more to explore alongside bat biologists. ' }
-      ]
-    },
-    {
-      title: "Climate Modeling & Gravity Waves",
-      description: "Improved climate models by better parameterizing gravity waves using ERA5 data and Attention U-Net models.",
-      image: '/images/projects/datawave.png',
-      tags: ["Climate Modeling", "ML"],
-      date: "2024",
-      type: "research",
-      fullDescription: "I worked in Aditi Sheshadri's lab at Stanford in collaboration with an international project called DataWave to train an Attention U-Net model to improve the parameterization of gravity waves in three dimensions. More than anything, this project taught me how to work with massive amounts of data. With the guidance of my advisor, Aman Gupta, I learned to move terabytes of ERA5 data on and off of virtual servers to compute momentum fluxes and train the U-Net model.",
-      linkWords: ["DataWave"],
-      links: ["https://datawaveproject.github.io"],
-      outcomes: [
-        "Suceeded in computing momentum fluxes from 10 years of ERA5 data without blowing up anyone's servers in the process."
-      ]
-    }
-  ];
-
-  const contactMethods = [
-    {
-      platform: 'LinkedIn',
-      handle: '/in/annafisherlopez',
-      url: 'https://linkedin.com/in/annafisherlopez',
-      icon: Linkedin,
-      color: 'hover:text-blue-600'
-    },
-    {
-      platform: 'GitHub',
-      handle: '@afisherlopez',
-      url: 'https://github.com/afisherlopez',
-      icon: Github,
-      color: 'hover:text-gray-900 dark:hover:text-gray-100'
-    },
-    {
-      platform: 'Email',
-      handle: 'annafisherlopez@gmail.com',
-      url: 'mailto:annafisherlopez@gmail.com',
-      icon: Mail,
-      color: 'hover:text-primary'
-    }
-  ];
-
-  const renderFactText = (fact: typeof facts[0]) => {
-    const parts = fact.text.split(fact.linkWord);
-    return (
-      <>
-        {parts[0]}
-        <button
-          onClick={() => setSelectedFact(fact.popup)}
-          className="underline hover:opacity-80 transition-colors cursor-pointer"
-          style={{ 
-            fontFamily: '"Faculty Glyphic", sans-serif',
-            fontSize: 'inherit',
-            color: '#2d5a3d'
-          }}
-        >
-          {fact.linkWord}
-        </button>
-        {parts[1]}
-      </>
-    );
-  };
-
-  const renderProjectDescription = (project: ProjectDetails) => {
-    if (!project.linkWords || !project.links || project.linkWords.length === 0) {
-      return project.fullDescription;
-    }
-
-    let text = project.fullDescription;
-    const elements: React.ReactNode[] = [];
-    
-    // Process each linkWord
-    project.linkWords.forEach((linkWord, index) => {
-      const parts = text.split(linkWord);
-      if (parts.length > 1) {
-        elements.push(parts[0]);
-        elements.push(
-          <a
-            key={`link-${index}`}
-            href={project.links![index]}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              color: '#2563eb', 
-              textDecoration: 'underline', 
-              fontFamily: '"Faculty Glyphic", sans-serif' 
-            }}
-          >
-            {linkWord}
-          </a>
-        );
-        text = parts.slice(1).join(linkWord);
-      }
-    });
-    
-    // Add remaining text
-    elements.push(text);
-    
-    return <>{elements}</>;
-  };
+export default function HomePage({ currentPage }: HomePageProps) {
+  const isExternalLink = (href: string) => href.startsWith("http");
+  const currentSection = pageSections.find((section) => section.id === currentPage);
 
   return (
-    <div style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-      {/* Sticky Navigation Bar */}
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ 
-          y: showStickyNav ? 0 : -100, 
-          opacity: showStickyNav ? 1 : 0 
-        }}
-        transition={{ duration: 0.3 }}
-        style={{ 
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          width: '100vw',
-          zIndex: 50,
-          pointerEvents: showStickyNav ? 'auto' : 'none',
-          backgroundColor: 'rgba(255, 255, 255, 0.4)',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-          borderBottom: '1px solid rgba(139, 125, 118, 0.2)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '13px 0'
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f4fcf2",
+        color: "#1f2937",
+        fontFamily: '"Faculty Glyphic", sans-serif',
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <SiteHeader activePage={currentPage} />
+
+      <main
+        style={{
+          maxWidth: "700px",
+          width: "100%",
+          flex: 1,
+          margin: "0 auto",
+          padding: "6.35rem 1.85rem 2rem",
         }}
       >
-        <div style={{ 
-          width: '66.666%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          {allNavigationItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-4 ${activeSection === item.id ? 'text-shadow-medium' : 'text-shadow-light'}`}
-              style={{ 
-                fontFamily: '"Faculty Glyphic", sans-serif',
-                color: activeSection === item.id ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Hero Section */}
-    <div className="min-h-screen flex flex-col items-center justify-center px-6">
-      <div className="text-center max-w-2xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-            <h1 className="mb-6 text-shadow-heavy" style={{ 
-              fontSize: '2.5rem', 
-              fontWeight: 'bold', 
-              color: '#FFFFFF', 
-              fontFamily: '"Faculty Glyphic", sans-serif'
-            }}>
-              Anna Fisher Lopez
-            </h1>
-            <p className="mb-12 text-lg text-shadow-heavy" style={{ 
-              color: '#FFFFFF', 
-              fontFamily: '"Faculty Glyphic", sans-serif'
-            }}>
-            Pursuing AI-driven climate solutions
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-            className="w-full max-w-5xl mx-auto"
-          >
+        {currentPage === "about" ? (
+          <section className="mb-16">
             <div
-              className="hero-nav-bar flex justify-between items-center py-5 px-16 backdrop-blur-sm"
-              style={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                borderRadius: '16px',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
+              style={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr) minmax(120px, 165px)",
+                alignItems: "start",
+                columnGap: "1.5rem",
               }}
-        >
-          {navigationItems.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-lg font-medium transition-all duration-300 hover:scale-110 cursor-pointer px-6 text-shadow-medium"
-                  style={{ 
+            >
+              <div>
+                <h1
+                  style={{
+                    fontSize: "1.25rem",
+                    marginBottom: "0.8rem",
+                    fontWeight: 700,
                     fontFamily: '"Faculty Glyphic", sans-serif',
-                    color: '#FFFFFF'
                   }}
-                  whileHover={{ scale: 1.1 }}
                 >
-                  {item.label}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
+                  {aboutSection.title}
+                </h1>
 
-      {/* Projects Section */}
-      <div id="projects" className="px-6 pt-16 pb-20">
-        <div className="max-w-6xl mx-auto">
-            <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="mb-8 text-shadow-heavy" style={{ 
-              fontFamily: '"Faculty Glyphic", sans-serif', 
-              fontSize: '2.25rem',
-              fontWeight: 'bold',
-              color: '#FFFFFF'
-            }}>Projects & Research</h2>
-          </motion.div>
+                <p style={{ ...sharedParagraphStyle, marginBottom: "1.8rem" }}>
+                  {aboutSection.intro}
+                </p>
 
-          {/* Roundtable Link */}
-          <motion.a
-            href="https://roundtable.annafisherlopez.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-            className="flex flex-col items-center justify-center mb-12 cursor-pointer group"
-          >
-            <div 
-              className="rounded-xl p-6 transition-all duration-300 group-hover:shadow-xl"
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}
-            >
-              <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
-                {/* Blue blob - top */}
-                <path 
-                  d="M60 8 C45 8, 38 18, 38 28 C38 38, 45 45, 55 45 C55 45, 50 42, 50 38 C50 34, 55 32, 60 32 C65 32, 70 34, 70 38 C70 42, 65 45, 65 45 C75 45, 82 38, 82 28 C82 18, 75 8, 60 8 Z" 
-                  fill="#4A90D9" 
-                  stroke="#2D2D2D" 
-                  strokeWidth="2.5"
-                />
-                {/* Green blob - bottom left */}
-                <path 
-                  d="M8 65 C8 50, 15 45, 25 45 C32 45, 38 48, 42 55 C42 55, 40 50, 44 48 C48 46, 52 50, 52 55 C52 60, 48 65, 48 65 C52 72, 48 85, 38 95 C28 105, 15 105, 10 95 C5 85, 8 75, 8 65 Z" 
-                  fill="#3DAA8C" 
-                  stroke="#2D2D2D" 
-                  strokeWidth="2.5"
-                />
-                {/* Purple blob - bottom right */}
-                <path 
-                  d="M112 65 C112 50, 105 45, 95 45 C88 45, 82 48, 78 55 C78 55, 80 50, 76 48 C72 46, 68 50, 68 55 C68 60, 72 65, 72 65 C68 72, 72 85, 82 95 C92 105, 105 105, 110 95 C115 85, 112 75, 112 65 Z" 
-                  fill="#8B5FC7" 
-                  stroke="#2D2D2D" 
-                  strokeWidth="2.5"
-                />
-                {/* White circular table - center */}
-                <circle 
-                  cx="60" 
-                  cy="60" 
-                  r="30" 
-                  fill="#F8F6F0" 
-                  stroke="#2D2D2D" 
-                  strokeWidth="2.5"
-                />
-              </svg>
-              <p className="text-center mt-3 font-medium group-hover:text-blue-600 transition-colors" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                Roundtable
-              </p>
-            </div>
-          </motion.a>
+                {aboutSection.details.map((detail) => (
+                  <div key={detail.title} style={{ marginBottom: "1.8rem" }}>
+                    <h2
+                      style={{
+                        fontSize: "1.02rem",
+                        marginBottom: "0.6rem",
+                        fontWeight: 700,
+                        fontFamily: '"Faculty Glyphic", sans-serif',
+                      }}
+                    >
+                      {detail.title}
+                    </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" style={{ paddingBottom: '3rem' }}>
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-                className="group cursor-pointer"
-                onClick={() => setSelectedProject(project)}
-              >
-                <div 
-                  className="rounded-xl border border-border/50 p-6 h-full relative overflow-hidden"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}
-                >
-                  <div className="space-y-4">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between gap-2">
-                        <h3 className="group-hover:text-primary transition-colors" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{project.title}</h3>
-                      </div>
-                      
-                      <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                        {project.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-1">
-                        {project.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border/30" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                        <Calendar className="h-3 w-3" />
-                        <span>{project.date}</span>
-                        <span className="ml-auto capitalize">{project.type}</span>
-                      </div>
-                    </div>
+                    <p style={{ ...sharedParagraphStyle, marginBottom: 0 }}>
+                      {detail.text}
+                      {detail.linkLabel && detail.linkHref ? (
+                        <a
+                          href={detail.linkHref}
+                          target={isExternalLink(detail.linkHref) ? "_blank" : undefined}
+                          rel={isExternalLink(detail.linkHref) ? "noreferrer" : undefined}
+                          style={{ textDecoration: "underline", color: "#344a75" }}
+                        >
+                          {detail.linkLabel}
+                        </a>
+                      ) : null}
+                      {detail.linkTrailingText ?? ""}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 text-lg text-white"
-            style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}
-          >
-            This section is under construction - for more, check out my resume{' '}
-            <a
-              href="/Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-blue-300 transition-colors"
+                ))}
+              </div>
+
+              <div style={{ justifySelf: "end", width: "100%" }}>
+                <ImageWithFallback
+                  src={aboutSection.imageSrc}
+                  alt={aboutSection.imageAlt}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: "0.12rem",
+                  }}
+                />
+              </div>
+            </div>
+          </section>
+        ) : currentSection ? (
+          <section className="mb-14">
+            <h1
+              style={{
+                fontSize: "1.25rem",
+                marginBottom: "0.8rem",
+                fontWeight: 700,
+                fontFamily: '"Faculty Glyphic", sans-serif',
+              }}
             >
-              here
-            </a>
-            !
-          </motion.p>
-        </div>
-      </div>
+              {currentSection.title}
+            </h1>
 
-      {/* About Me Section */}
-      <div id="funfacts" className="px-6 pb-20" style={{ paddingTop: '1rem' }}>
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="mb-8 text-shadow-heavy" style={{ 
-              fontFamily: '"Faculty Glyphic", sans-serif', 
-              fontSize: '2.25rem',
-              fontWeight: 'bold',
-              color: '#FFFFFF'
-            }}>About Me</h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="bg-card/70 backdrop-blur-sm rounded-xl border border-border/50 p-8"
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)', marginBottom: '12rem' }}
-          >
-            <ul className="space-y-6">
-              {facts.map((fact, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-3"
-                >
-                  <span className="text-primary mt-2" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>•</span>
-                  <p className="text-lg leading-relaxed" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                    {renderFactText(fact)}
-                  </p>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Contact Section */}
-      <div id="contact" className="px-6 pt-16 pb-32" style={{ minHeight: '100vh' }}>
-        <div className="max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="mb-8 text-shadow-heavy" style={{ 
-              fontFamily: '"Faculty Glyphic", sans-serif', 
-              fontSize: '2.25rem',
-              fontWeight: 'bold',
-              color: '#FFFFFF'
-            }}>Contact Info</h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="rounded-xl border border-border/50 p-8"
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}
-          >
-            <div className="space-y-6">
-              {contactMethods.map((contact, index) => (
-                <motion.div
-                  key={contact.platform}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <a
-                    href={contact.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-lg hover:bg-accent/50 transition-all duration-300 group"
-                  >
-                    <contact.icon className={`h-6 w-6 text-muted-foreground transition-colors ${contact.color} group-hover:scale-110`} />
-                    <div className="flex-1">
-                      <h3 className="group-hover:text-primary transition-colors" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{contact.platform}</h3>
-                      <p className="text-sm text-muted-foreground" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{contact.handle}</p>
-                    </div>
-                    <ArrowLeft className="h-4 w-4 text-muted-foreground rotate-180 group-hover:translate-x-1 transition-transform" />
-                  </a>
-            </motion.div>
-          ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mt-8"
-          >
-            <p className="text-sm text-muted-foreground" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-              
-            </p>
-        </motion.div>
-        </div>
-      </div>
-
-      {/* Dialog for About Me */}
-      <Dialog open={!!selectedFact} onOpenChange={() => setSelectedFact(null)}>
-        <DialogContent className="max-w-fit w-auto p-4">
-          {selectedFact && (
-            <div className="space-y-4">
-              <ImageWithFallback
-                src={selectedFact.image}
-                alt="Fun fact illustration"
-                className="max-h-[70vh] w-auto rounded-lg"
-                style={{ objectFit: 'contain' }}
-              />
-              <p className="text-center text-muted-foreground max-w-md mx-auto" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                {selectedFact.caption}
+            {currentSection.paragraphs.map((paragraph) => (
+              <p key={paragraph} style={sharedParagraphStyle}>
+                {paragraph}
               </p>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+            ))}
+          </section>
+        ) : null}
 
-      {/* Custom Project Details Overlay */}
-      {selectedProject && (
-        <div 
+        <footer
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backdropFilter: 'blur(5px)',
-            backgroundColor: 'rgba(255, 255, 255, 0.7)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1000,
-            overflowY: 'auto'
-          }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setSelectedProject(null);
-            }
+            marginTop: "1.25rem",
+            paddingTop: "1rem",
+            borderTop: "1px solid rgba(17, 24, 39, 0.12)",
+            fontSize: "0.72rem",
+            color: "#4a5568",
+            fontFamily: '"Faculty Glyphic", sans-serif',
+            textAlign: "right",
           }}
         >
           <div
             style={{
-              backgroundColor: 'white',
-              maxWidth: '80%',
-              width: '80%',
-              height: '80%',
-              padding: '2rem',
-              position: 'relative',
-              overflowY: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              borderRadius: '20px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+              marginBottom: "0.75rem",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+              justifyContent: "flex-end",
             }}
-            onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-              {/* Image at top */}
-              <div style={{ marginBottom: '2rem' }}>
-                <ImageWithFallback
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-              </div>
-
-              {/* Title and metadata */}
-              <h1 style={{ 
-                fontSize: '2rem', 
-                fontWeight: 'bold', 
-                marginBottom: '1rem',
-                fontFamily: '"Faculty Glyphic", sans-serif'
-              }}>
-                {selectedProject.title}
-              </h1>
-              
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '1rem', 
-                fontSize: '0.875rem',
-                color: '#6b7280',
-                marginBottom: '1rem'
-              }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <Calendar className="h-3 w-3" />
-                  {selectedProject.date}
-                </span>
-                <span style={{ textTransform: 'capitalize' }}>{selectedProject.type}</span>
-              </div>
-
-              {/* Tags */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                {selectedProject.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              {/* Overview */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{ 
-                  fontSize: '1.125rem', 
-                  fontWeight: '600', 
-                  marginBottom: '0.5rem',
-                  fontFamily: '"Faculty Glyphic", sans-serif'
-                }}>
-                  Overview
-                </h3>
-                <p style={{ 
-                  fontSize: '0.875rem', 
-                  color: '#6b7280', 
-                  lineHeight: '1.625',
-                  fontFamily: '"Faculty Glyphic", sans-serif'
-                }}>
-                  {renderProjectDescription(selectedProject)}
-                </p>
-              </div>
-
-              {/* Outcomes */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{ 
-                  fontSize: '1.125rem', 
-                  fontWeight: '600', 
-                  marginBottom: '0.5rem',
-                  fontFamily: '"Faculty Glyphic", sans-serif'
-                }}>
-                  Outcomes
-                </h3>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {selectedProject.outcomes.map((outcome, index) => (
-                    <li key={index} style={{ 
-                      display: 'flex', 
-                      alignItems: 'flex-start', 
-                      gap: '0.5rem',
-                      marginBottom: '0.5rem',
-                      fontSize: '0.875rem',
-                      color: '#6b7280'
-                    }}>
-                      <span style={{ color: 'var(--primary)', marginTop: '0.25rem' }}>•</span>
-                      <span style={{ fontFamily: '"Faculty Glyphic", sans-serif' }}>{outcome}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Extra Images */}
-              {selectedProject.extraImages && selectedProject.extraImages.length > 0 && (
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                    {selectedProject.extraImages.map((img, index) => (
-                      <div key={index} style={{ flex: '1 1 calc(50% - 0.5rem)', minWidth: '200px' }}>
-                        <ImageWithFallback
-                          src={img.src}
-                          alt={img.caption || `Project image ${index + 1}`}
-                          className="w-full h-auto rounded-lg"
-                          style={{ objectFit: 'contain' }}
-                        />
-                        {img.caption && (
-                          <p style={{ 
-                            fontSize: '0.75rem', 
-                            color: '#6b7280', 
-                            marginTop: '0.5rem',
-                            textAlign: 'center',
-                            fontFamily: '"Faculty Glyphic", sans-serif'
-                          }}>
-                            {img.caption}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* More Info */}
-              {(selectedProject.moreInfoText || selectedProject.moreInfoUrl) && (
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h3 style={{ 
-                    fontSize: '1.125rem', 
-                    fontWeight: '600', 
-                    marginBottom: '0.5rem',
-                    fontFamily: '"Faculty Glyphic", sans-serif'
-                  }}>
-                    More Info
-                  </h3>
-                  {selectedProject.moreInfoText && (
-                    <p style={{ 
-                      fontSize: '0.875rem', 
-                      color: '#6b7280', 
-                      lineHeight: '1.625',
-                      fontFamily: '"Faculty Glyphic", sans-serif',
-                      marginBottom: '0.5rem'
-                    }}>
-                      {selectedProject.moreInfoText}
-                    </p>
-                  )}
-                  {selectedProject.moreInfoUrl && (
-                    <a
-                      href={selectedProject.moreInfoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ 
-                        color: '#2563eb', 
-                        textDecoration: 'underline', 
-                        fontSize: '0.875rem',
-                        fontFamily: '"Faculty Glyphic", sans-serif'
-                      }}
-                    >
-                      {selectedProject.moreInfoUrl}
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
+            {footerPrimaryLinks.map((link, index) => (
+              <span key={link.label} style={{ display: "inline-flex", gap: "0.5rem" }}>
+                <a
+                  href={link.href}
+                  target={isExternalLink(link.href) ? "_blank" : undefined}
+                  rel={isExternalLink(link.href) ? "noreferrer" : undefined}
+                >
+                  {link.label}
+                </a>
+                {index < footerPrimaryLinks.length - 1 ? <span>&middot;</span> : null}
+              </span>
+            ))}
           </div>
-        </div>
-      )}
+        </footer>
+      </main>
+
+      <div
+        style={{
+          width: "100%",
+          padding: "0.2rem 1.35rem 0.9rem",
+          fontSize: "0.6rem",
+          color: "#6b7280",
+          fontFamily: '"Faculty Glyphic", sans-serif',
+          textAlign: "right",
+        }}
+      >
+        <a href="https://sambeskind.info" target="_blank" rel="noreferrer">
+          design inspo from sambeskind.info
+        </a>
+      </div>
     </div>
   );
 }
