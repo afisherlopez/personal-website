@@ -31,6 +31,12 @@ export const bookshelfPageContent: BookshelfPageContent = {
       label: "books",
       items: [
         {
+          title: "When We Cease to Understand the World",
+          creator: "Benjamín Labatut",
+          imageSrc: "/images/bookshelf/when-we-cease.webp",
+          notes: "I really love biographical fiction as a genre. These short stories follow the lives of real people and events, editorializing slightly to make the narrative flow more smoothly (e.g. adding dialogue, even though no one really knows what was said). They are stories of different physicists, from the Nazi's use of meth & cyanide at the end of WWII to legendary physicists serving in the WWI trenches to a genius mathematician so tortured by one of his theories that he ran away and became a hermit. A really fun way to learn more about some of the most interesting parts of the history of modern physics and the people behind it.",
+        },
+        {
           title: "The Maniac",
           creator: "Benjamín Labatut",
           imageSrc: "/images/bookshelf/the_maniac.jpg",
@@ -38,16 +44,16 @@ export const bookshelfPageContent: BookshelfPageContent = {
             "This book explores the life of Jon von Neumann, who was one of the most influential mathematicians of the 20th century, through a series of fictionalized journal entries by those who knew him. Super cool narrative format that I really enjoyed. von Neumann worked on the first model for the conditions necessary for a machine to reproduce, published in a posthumous 'Theory of Self-Reproducing Automata'. He worked on the Manhattan Project (and was a little too Pro Bomb). Also for all you nerds, he invented merge sort. Crazy guy but cool guy, and even cooler storytelling. ",
         },
         {
-          title: "When We Cease to Understand the World",
-          creator: "Benjamín Labatut",
-          imageSrc: "/images/bookshelf/when-we-cease.webp",
-          notes: "I really love biographical fiction as a genre. These short stories follow the lives of real people and events, editorializing slightly to make the narrative flow more smoothly (e.g. adding dialogue, even though no one really knows what was said). They are stories of different physicists, from the Nazi's use of meth & cyanide at the end of WWII to legendary physicists serving in the WWI trenches to a genius mathematician so tortured by one of his theories that he ran away and became a hermit. A really fun way to learn more about some of the most interesting parts of the history of modern physics and the people behind it.",
+          title: "The Overstory",
+          creator: "Richard Powers",
+          imageSrc: "/images/bookshelf/overstory.jpg",
+          notes: "A book to make the ordinary person notice the ordinary in an unordinary way. I will forever thank Richard Powers for opening my eyes to trees.",
         },
         {
           title: "The Time Traveler's Wife",
           creator: "Audrey Niffenegger",
           imageSrc: "/images/bookshelf/time-travelers-wife.jpg",
-          notes: "A beautiful love story told from the perspective of a man who involuntarily time travels and his wife. Fascinating relationship building and deeply emotional.",
+          notes: "A beautiful love story told from the perspective of a man who involuntarily time travels about his relationship with his wife. Fascinating relationship building and deeply emotional.",
         },
       ],
     },
