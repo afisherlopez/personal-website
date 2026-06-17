@@ -1894,6 +1894,14 @@ html {
   display: none;
 }
 
+.writing-modal-desktop {
+  display: grid;
+}
+
+.writing-modal-mobile {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .about-grid {
     grid-template-columns: 1fr;
@@ -1965,5 +1973,65 @@ html {
   .bookshelf-modal-notes {
     font-size: 0.82rem !important;
     line-height: 1.6 !important;
+  }
+
+  .writing-modal-top-row {
+    grid-template-columns: minmax(96px, 125px) minmax(0, 1fr) !important;
+    align-items: start;
+  }
+
+  .writing-modal-desktop {
+    display: none !important;
+  }
+
+  .writing-modal-mobile {
+    display: block;
+  }
+
+  .writing-modal-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .writing-modal-image-pane {
+    border-right: 1px solid rgba(17, 24, 39, 0.16) !important;
+    border-bottom: none !important;
+  }
+
+  .writing-modal-image {
+    min-height: 120px !important;
+    height: 100% !important;
+  }
+
+  .writing-modal-heading-pane {
+    padding: 0.85rem 0.9rem 1rem !important;
+  }
+
+  .writing-modal-mobile .writing-modal-heading-pane {
+    padding-top: 1.7rem !important;
+    padding-right: 2.8rem !important;
+  }
+
+  .writing-modal-heading {
+    margin-bottom: 0.2rem !important;
+  }
+
+  .writing-modal-notes-wrap {
+    padding: 0.95rem 0.9rem 1.1rem !important;
+  }
+
+  .writing-modal-notes {
+    font-size: 0.82rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .writing-prose-line {
+    font-size: 0.92rem !important;
+    line-height: 1.72 !important;
+  }
+
+  .writing-poetry-line {
+    font-size: 0.76rem !important;
+    line-height: 1.58 !important;
   }
 }

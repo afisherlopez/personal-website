@@ -1,35 +1,40 @@
 import React, { useEffect, useState } from "react";
 import HomePage from "./components/HomePage";
 import BookshelfPage from "./components/pages/BookshelfPage";
+import WritingPage from "./components/pages/WritingPage";
 import { defaultPage, navItems, type PageId } from "./content/homePageContent";
 
 const pageIds = new Set(navItems.map((item) => item.id));
 
-function normalizeHash(hash: string): string {
-  return hash.replace(/^#\/?/, "").trim().toLowerCase();
+function getHashSegments(hash: string): string[] {
+  const normalized = hash.replace(/^#\/?/, "").trim().toLowerCase();
+  return normalized ? normalized.split("/").filter(Boolean) : [];
 }
 
-function getPageFromHash(): PageId {
-  const candidate = normalizeHash(window.location.hash);
+function getRouteFromHash(): { page: PageId; segments: string[] } {
+  const segments = getHashSegments(window.location.hash);
+  const candidate = segments[0];
 
   if (pageIds.has(candidate as PageId)) {
-    return candidate as PageId;
+    return { page: candidate as PageId, segments: segments.slice(1) };
   }
 
-  return defaultPage;
+  return { page: defaultPage, segments: [] };
 }
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>(defaultPage);
+  const [routeSegments, setRouteSegments] = useState<string[]>([]);
 
   useEffect(() => {
     const syncFromHash = () => {
-      const nextPage = getPageFromHash();
-      setCurrentPage(nextPage);
+      const route = getRouteFromHash();
+      setCurrentPage(route.page);
+      setRouteSegments(route.segments);
 
-      const normalized = normalizeHash(window.location.hash);
-      if (normalized !== nextPage) {
-        window.history.replaceState(null, "", `#/${nextPage}`);
+      const rawSegments = getHashSegments(window.location.hash);
+      if (!rawSegments.length || !pageIds.has(rawSegments[0] as PageId)) {
+        window.history.replaceState(null, "", `#/${route.page}`);
       }
     };
 
@@ -40,10 +45,14 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
-  }, [currentPage]);
+  }, [currentPage, routeSegments]);
 
   if (currentPage === "bookshelf") {
     return <BookshelfPage currentPage={currentPage} />;
+  }
+
+  if (currentPage === "writing") {
+    return <WritingPage currentPage={currentPage} routeSegments={routeSegments} />;
   }
 
   return <HomePage currentPage={currentPage} />;

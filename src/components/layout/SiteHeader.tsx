@@ -31,7 +31,14 @@ export default function SiteHeader({ activePage }: SiteHeaderProps) {
           letterSpacing: "0.01em",
         }}
       >
-        <a href="#/about" style={{ whiteSpace: "nowrap" }}>
+        <a
+          href="#/about"
+          style={{
+            whiteSpace: "nowrap",
+            fontSize: "clamp(0.79rem, 0.22vw + 0.74rem, 0.95rem)",
+            fontWeight: 700,
+          }}
+        >
           {siteBrand}
         </a>
 

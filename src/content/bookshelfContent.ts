@@ -47,7 +47,7 @@ export const bookshelfPageContent: BookshelfPageContent = {
           title: "The Overstory",
           creator: "Richard Powers",
           imageSrc: "/images/bookshelf/overstory.jpg",
-          notes: "A book to make the ordinary person notice the ordinary in an unordinary way. I will forever thank Richard Powers for opening my eyes to trees.",
+          notes: "A book to make the ordinary person notice the ordinary in an extraordinary way. I will forever thank Richard Powers for opening my eyes to trees.",
         },
         {
           title: "The Time Traveler's Wife",
