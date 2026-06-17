@@ -1909,7 +1909,40 @@ html {
     max-width: 165px;
   }
 
-  .bookshelf-modal-grid {
-    grid-template-columns: 1fr !important;
+  .bookshelf-modal-top-row {
+    grid-template-columns: minmax(96px, 125px) minmax(0, 1fr) !important;
+    align-items: start;
+  }
+
+  .bookshelf-modal-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .bookshelf-modal-image-pane {
+    border-right: 1px solid rgba(17, 24, 39, 0.16) !important;
+    border-bottom: none !important;
+  }
+
+  .bookshelf-modal-image {
+    min-height: 120px !important;
+    height: 100% !important;
+  }
+
+  .bookshelf-modal-heading-pane {
+    padding: 0.85rem 0.9rem 1rem !important;
+  }
+
+  .bookshelf-modal-heading {
+    margin-bottom: 0.2rem !important;
+  }
+
+  .bookshelf-modal-notes-wrap {
+    padding: 0.95rem 0.9rem 1.1rem !important;
+  }
+
+  .bookshelf-modal-notes {
+    font-size: 0.82rem !important;
+    line-height: 1.6 !important;
   }
 }

@@ -184,78 +184,109 @@ export default function BookshelfPage({ currentPage }: BookshelfPageProps) {
             position: "fixed",
             inset: 0,
             zIndex: 40,
-            backgroundColor: "rgba(12, 19, 24, 0.32)",
+            backgroundColor: "rgba(12, 19, 24, 0.34)",
+            backdropFilter: "blur(1.5px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "1.1rem",
+            padding: "0.8rem",
           }}
         >
           <div
             onClick={(event) => event.stopPropagation()}
             style={{
               width: "min(900px, 100%)",
+              maxHeight: "90vh",
               backgroundColor: "#f4fcf2",
               border: "1px solid rgba(17, 24, 39, 0.2)",
-              borderRadius: "6px",
-              boxShadow: "0 18px 42px rgba(17, 24, 39, 0.2)",
+              borderRadius: "10px",
+              boxShadow: "0 20px 52px rgba(17, 24, 39, 0.22)",
               overflow: "hidden",
-              position: "relative",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <button
-              aria-label="Close popup"
-              onClick={() => setSelectedItem(null)}
+            <div
               style={{
-                position: "absolute",
-                top: "0.55rem",
-                right: "0.55rem",
-                border: "1px solid rgba(17, 24, 39, 0.24)",
-                borderRadius: "4px",
-                padding: "0.18rem 0.42rem",
-                fontSize: "0.8rem",
-                lineHeight: 1,
-                cursor: "pointer",
-                zIndex: 2,
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                padding: "0.45rem 0.55rem",
+                borderBottom: "1px solid rgba(17, 24, 39, 0.12)",
                 backgroundColor: "#f4fcf2",
               }}
             >
-              x
-            </button>
+              <button
+                aria-label="Close popup"
+                onClick={() => setSelectedItem(null)}
+                style={{
+                  border: "1px solid rgba(17, 24, 39, 0.24)",
+                  borderRadius: "6px",
+                  padding: "0.2rem 0.5rem",
+                  fontSize: "0.84rem",
+                  lineHeight: 1,
+                  cursor: "pointer",
+                  backgroundColor: "#f4fcf2",
+                }}
+              >
+                x
+              </button>
+            </div>
 
             <div
-              className="bookshelf-modal-grid"
+              className="bookshelf-modal-scroll"
               style={{
-                display: "grid",
-                gridTemplateColumns: "minmax(180px, 280px) minmax(0, 1fr)",
+                overflowY: "auto",
               }}
             >
-              <div style={{ borderRight: "1px solid rgba(17, 24, 39, 0.16)" }}>
-                <ImageWithFallback
-                  src={normalizeImageSrc(selectedItem.imageSrc)}
-                  alt={selectedItem.title}
-                  style={{ width: "100%", height: "100%", minHeight: "260px", objectFit: "cover" }}
-                />
-              </div>
-
-              <div style={{ padding: "1.25rem 1.3rem 1.45rem" }}>
+              <div
+                className="bookshelf-modal-top-row"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(180px, 280px) minmax(0, 1fr)",
+                }}
+              >
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: "0.8rem",
-                    marginBottom: "1.1rem",
-                    paddingTop: "1.3rem",
-                  }}
+                  className="bookshelf-modal-image-pane"
+                  style={{ borderRight: "1px solid rgba(17, 24, 39, 0.16)" }}
                 >
-                  <div>
-                    <h3 style={{ fontSize: "1.08rem", fontWeight: 700 }}>{selectedItem.title}</h3>
-                    <p style={{ fontSize: "0.8rem", color: "#6b7280" }}>{selectedItem.creator}</p>
-                  </div>
+                  <ImageWithFallback
+                    className="bookshelf-modal-image"
+                    src={normalizeImageSrc(selectedItem.imageSrc)}
+                    alt={selectedItem.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "260px",
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
 
+                <div className="bookshelf-modal-heading-pane" style={{ padding: "1.15rem 1.2rem 1rem" }}>
+                  <div
+                    className="bookshelf-modal-heading"
+                    style={{
+                      marginBottom: "0.2rem",
+                    }}
+                  >
+                    <div>
+                      <h3 style={{ fontSize: "1.08rem", fontWeight: 700 }}>{selectedItem.title}</h3>
+                      <p style={{ fontSize: "0.8rem", color: "#6b7280" }}>{selectedItem.creator}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="bookshelf-modal-notes-wrap"
+                style={{
+                  padding: "1.1rem 1.2rem 1.35rem",
+                  borderTop: "1px solid rgba(17, 24, 39, 0.12)",
+                }}
+              >
                 <p
+                  className="bookshelf-modal-notes"
                   style={{
                     fontSize: "0.88rem",
                     lineHeight: 1.72,
