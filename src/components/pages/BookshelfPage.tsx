@@ -204,34 +204,28 @@ export default function BookshelfPage({ currentPage }: BookshelfPageProps) {
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
+              position: "relative",
             }}
           >
-            <div
+            <button
+              aria-label="Close popup"
+              onClick={() => setSelectedItem(null)}
               style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                padding: "0.45rem 0.55rem",
-                borderBottom: "1px solid rgba(17, 24, 39, 0.12)",
+                position: "absolute",
+                top: "0.55rem",
+                right: "0.55rem",
+                border: "1px solid rgba(17, 24, 39, 0.24)",
+                borderRadius: "6px",
+                padding: "0.2rem 0.5rem",
+                fontSize: "0.84rem",
+                lineHeight: 1,
+                cursor: "pointer",
                 backgroundColor: "#f4fcf2",
+                zIndex: 3,
               }}
             >
-              <button
-                aria-label="Close popup"
-                onClick={() => setSelectedItem(null)}
-                style={{
-                  border: "1px solid rgba(17, 24, 39, 0.24)",
-                  borderRadius: "6px",
-                  padding: "0.2rem 0.5rem",
-                  fontSize: "0.84rem",
-                  lineHeight: 1,
-                  cursor: "pointer",
-                  backgroundColor: "#f4fcf2",
-                }}
-              >
-                x
-              </button>
-            </div>
+              x
+            </button>
 
             <div
               className="bookshelf-modal-scroll"
@@ -239,6 +233,58 @@ export default function BookshelfPage({ currentPage }: BookshelfPageProps) {
                 overflowY: "auto",
               }}
             >
+              <div
+                className="bookshelf-modal-desktop"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(180px, 280px) minmax(0, 1fr)",
+                }}
+              >
+                <div
+                  className="bookshelf-modal-image-pane"
+                  style={{ borderRight: "1px solid rgba(17, 24, 39, 0.16)" }}
+                >
+                  <ImageWithFallback
+                    className="bookshelf-modal-image"
+                    src={normalizeImageSrc(selectedItem.imageSrc)}
+                    alt={selectedItem.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "260px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+
+                <div style={{ padding: "1.25rem 1.3rem 1.45rem" }}>
+                  <div
+                    className="bookshelf-modal-heading"
+                    style={{
+                      marginBottom: "1.1rem",
+                    }}
+                  >
+                    <div>
+                      <h3 style={{ fontSize: "1.08rem", fontWeight: 700 }}>{selectedItem.title}</h3>
+                      <p style={{ fontSize: "0.8rem", color: "#6b7280" }}>{selectedItem.creator}</p>
+                    </div>
+                  </div>
+
+                  <p
+                    className="bookshelf-modal-notes"
+                    style={{
+                      fontSize: "0.88rem",
+                      lineHeight: 1.72,
+                      color: "#2d3748",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {renderInlineLinks(selectedItem.notes)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bookshelf-modal-mobile">
               <div
                 className="bookshelf-modal-top-row"
                 style={{
@@ -296,6 +342,7 @@ export default function BookshelfPage({ currentPage }: BookshelfPageProps) {
                 >
                   {renderInlineLinks(selectedItem.notes)}
                 </p>
+              </div>
               </div>
             </div>
           </div>

@@ -1886,6 +1886,14 @@ html {
   align-self: center;
 }
 
+.bookshelf-modal-desktop {
+  display: grid;
+}
+
+.bookshelf-modal-mobile {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .about-grid {
     grid-template-columns: 1fr;
@@ -1914,6 +1922,14 @@ html {
     align-items: start;
   }
 
+  .bookshelf-modal-desktop {
+    display: none !important;
+  }
+
+  .bookshelf-modal-mobile {
+    display: block;
+  }
+
   .bookshelf-modal-scroll {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -1931,6 +1947,11 @@ html {
 
   .bookshelf-modal-heading-pane {
     padding: 0.85rem 0.9rem 1rem !important;
+  }
+
+  .bookshelf-modal-mobile .bookshelf-modal-heading-pane {
+    padding-top: 1.7rem !important;
+    padding-right: 2.8rem !important;
   }
 
   .bookshelf-modal-heading {
