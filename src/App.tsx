@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HomePage from "./components/HomePage";
+import BookshelfPage from "./components/pages/BookshelfPage";
 import { defaultPage, navItems, type PageId } from "./content/homePageContent";
 
 const pageIds = new Set(navItems.map((item) => item.id));
@@ -40,6 +41,10 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [currentPage]);
+
+  if (currentPage === "bookshelf") {
+    return <BookshelfPage currentPage={currentPage} />;
+  }
 
   return <HomePage currentPage={currentPage} />;
 }

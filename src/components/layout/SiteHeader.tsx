@@ -19,9 +19,8 @@ export default function SiteHeader({ activePage }: SiteHeaderProps) {
     >
       <div
         style={{
-          maxWidth: "1180px",
-          margin: "0 auto",
-          padding: "0.82rem clamp(1.1rem, 3vw, 2rem)",
+          width: "100%",
+          padding: "0.82rem clamp(0.7rem, 2vw, 1.2rem)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",

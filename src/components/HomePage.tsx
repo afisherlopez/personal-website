@@ -1,9 +1,9 @@
 import React from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import SiteHeader from "./layout/SiteHeader";
+import SiteFooter from "./layout/SiteFooter";
 import {
   aboutSection,
-  footerPrimaryLinks,
   pageSections,
   type PageId,
 } from "../content/homePageContent";
@@ -21,7 +21,6 @@ interface HomePageProps {
 }
 
 export default function HomePage({ currentPage }: HomePageProps) {
-  const isExternalLink = (href: string) => href.startsWith("http");
   const currentSection = pageSections.find((section) => section.id === currentPage);
 
   return (
@@ -91,8 +90,8 @@ export default function HomePage({ currentPage }: HomePageProps) {
                       {detail.linkLabel && detail.linkHref ? (
                         <a
                           href={detail.linkHref}
-                          target={isExternalLink(detail.linkHref) ? "_blank" : undefined}
-                          rel={isExternalLink(detail.linkHref) ? "noreferrer" : undefined}
+                          target="_blank"
+                          rel="noreferrer"
                           style={{ textDecoration: "underline", color: "#344a75" }}
                         >
                           {detail.linkLabel}
@@ -141,63 +140,7 @@ export default function HomePage({ currentPage }: HomePageProps) {
         ) : null}
 
       </main>
-
-      <footer
-        style={{
-          width: "100%",
-          borderTop: "1px solid rgba(17, 24, 39, 0.12)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "950px",
-            margin: "0 auto",
-            padding: "0.85rem clamp(1.125rem, 3.75vw, 2.55rem) 0.2rem",
-            fontSize: "clamp(0.74rem, 0.14vw + 0.69rem, 0.82rem)",
-            color: "#4a5568",
-            fontFamily: '"Faculty Glyphic", sans-serif',
-            textAlign: "right",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "0.75rem",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              justifyContent: "flex-end",
-            }}
-          >
-            {footerPrimaryLinks.map((link, index) => (
-              <span key={link.label} style={{ display: "inline-flex", gap: "0.5rem" }}>
-                <a
-                  href={link.href}
-                  target={isExternalLink(link.href) ? "_blank" : undefined}
-                  rel={isExternalLink(link.href) ? "noreferrer" : undefined}
-                >
-                  {link.label}
-                </a>
-                {index < footerPrimaryLinks.length - 1 ? <span>&middot;</span> : null}
-              </span>
-            ))}
-          </div>
-        </div>
-      </footer>
-
-      <div
-        style={{
-          width: "100%",
-          padding: "0.15rem 1rem 0.85rem",
-          fontSize: "clamp(0.6rem, 0.12vw + 0.57rem, 0.68rem)",
-          color: "#6b7280",
-          fontFamily: '"Faculty Glyphic", sans-serif',
-          textAlign: "right",
-        }}
-      >
-        <a href="https://sambeskind.info" target="_blank" rel="noreferrer">
-          design inspo from sambeskind.info
-        </a>
-      </div>
+      <SiteFooter />
     </div>
   );
 }

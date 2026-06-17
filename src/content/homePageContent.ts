@@ -28,7 +28,7 @@ export interface AboutSectionContent {
 }
 
 export interface PageSection {
-  id: Exclude<PageId, "about">;
+  id: Exclude<PageId, "about" | "bookshelf">;
   title: string;
   paragraphs: string[];
 }
@@ -74,31 +74,24 @@ export const aboutSection: AboutSectionContent = {
 
 export const pageSections: PageSection[] = [
   {
-    id: "bookshelf",
-    title: "Bookshelf",
-    paragraphs: [
-      "Add your book notes, recommendations, and reading list highlights here.",
-    ],
-  },
-  {
     id: "writing",
-    title: "Writing",
+    title: "Writing section in progress!",
     paragraphs: [
-      "Add links to essays, articles, and short reflections you want to publish.",
+      "",
     ],
   },
   {
     id: "projects",
-    title: "Projects",
+    title: "Projects section in progress!",
     paragraphs: [
-      "Add project summaries, current experiments, and any links you want to feature.",
+      "",
     ],
   },
   {
     id: "photobook",
-    title: "Photobook",
+    title: "Photobook section in progress!",
     paragraphs: [
-      "Add photo stories, album links, and captions you want to share.",
+      "",
     ],
   },
 ];

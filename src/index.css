@@ -1884,4 +1884,8 @@ html {
     justify-self: start;
     max-width: 165px;
   }
+
+  .bookshelf-modal-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
