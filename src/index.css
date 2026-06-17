@@ -1863,11 +1863,23 @@ html {
 /* Current site layout utilities */
 .about-grid {
   grid-template-columns: minmax(0, 1fr) minmax(225px, 285px);
-  align-items: center;
+  grid-template-areas:
+    "header image"
+    "body image";
+  align-items: start;
   column-gap: 5.6rem;
 }
 
+.about-header-block {
+  grid-area: header;
+}
+
+.about-body-block {
+  grid-area: body;
+}
+
 .about-image-wrap {
+  grid-area: image;
   justify-self: end;
   width: 100%;
   max-width: 285px;
@@ -1877,11 +1889,23 @@ html {
 @media (max-width: 760px) {
   .about-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "image"
+      "body";
     row-gap: 1rem;
   }
 
+  .about-header-block {
+    text-align: center;
+  }
+
+  .about-body-block {
+    margin-top: calc(2.3rem - 1rem);
+  }
+
   .about-image-wrap {
-    justify-self: start;
+    justify-self: center;
     max-width: 165px;
   }
 

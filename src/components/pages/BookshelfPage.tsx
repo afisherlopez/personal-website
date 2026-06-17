@@ -108,28 +108,15 @@ export default function BookshelfPage({ currentPage }: BookshelfPageProps) {
         <section style={{ marginBottom: "2.8rem" }}>
           <h1
             style={{
-              fontSize: "clamp(1.22rem, 0.42vw + 1.1rem, 1.52rem)",
-              fontWeight: 700,
-              marginBottom: "0.85rem",
+              fontSize: "clamp(1.4rem, 0.55vw + 1.22rem, 1.86rem)",
+              fontWeight: 800,
+              letterSpacing: "0.01em",
+              marginBottom: "0.45rem",
+              textTransform: "lowercase",
             }}
           >
             {bookshelfPageContent.pageTitle}
           </h1>
-          <div
-            style={{
-              borderBottom: "2px solid rgba(17, 24, 39, 0.75)",
-              width: "100%",
-            }}
-          />
-          <p
-            style={{
-              marginTop: "0.55rem",
-              fontSize: "0.72rem",
-              color: "#6b7280",
-            }}
-          >
-            still growing!
-          </p>
         </section>
 
         {bookshelfPageContent.categories.map((category) => (

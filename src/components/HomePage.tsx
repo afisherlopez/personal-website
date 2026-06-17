@@ -56,7 +56,7 @@ export default function HomePage({ currentPage }: HomePageProps) {
                 display: "grid",
               }}
             >
-              <div>
+              <div className="about-header-block">
                 <h1
                   style={{
                     fontSize: "clamp(1.26rem, 0.46vw + 1.14rem, 1.56rem)",
@@ -67,7 +67,9 @@ export default function HomePage({ currentPage }: HomePageProps) {
                 >
                   {aboutSection.title}
                 </h1>
+              </div>
 
+              <div className="about-body-block">
                 <p style={{ ...sharedParagraphStyle, marginBottom: "2.3rem" }}>
                   {aboutSection.intro}
                 </p>
