@@ -65,7 +65,7 @@ export const aboutSection: AboutSectionContent = {
     },
     {
       title: "Previously",
-      text: "I grew up and played frisbee in Takoma Park Maryland, then studied computer science and physics and adventured in the outdoors at Stanford.",
+      text: "I grew up and played frisbee in Takoma Park, Maryland, then studied computer science and physics and adventured in the outdoors at Stanford.",
     },
   ],
   imageSrc: "/images/pfp.jpg",
