@@ -106,7 +106,7 @@ export const bookshelfPageContent: BookshelfPageContent = {
         {
           title: "Detour",
           creator: "Samara Cyn",
-          imageSrc: "/images/bookshelf/detour.jpg",
+          imageSrc: "/images/bookshelf/detour.jpeg",
           notes: "She's the next big thing. Like Doechii if she didn't make TikTok music. Such a talented artist.",
         },
         {
