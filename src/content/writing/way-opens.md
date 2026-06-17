@@ -1,5 +1,5 @@
 Sit with me
-sink into the time-worn seams of the   
+Sink into the time-worn seams of the   
 squashiest, brownest couch in the place  
 Once, a snake fell from these rafters.  
 Hand me that book on the shelf, say  

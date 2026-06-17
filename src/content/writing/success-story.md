@@ -13,7 +13,7 @@ Over time, I have come to believe that I cannot just become Mexican by learning 
 
 If I had grown up speaking Spanish in my house and with my relatives, I have no doubts that I would consider myself Mexican. If my mother and I regularly conversed in my Abuelo’s native tongue, my answer to people’s questions about the “Lopez” in my last name would be much easier. I could skip the long-winded explanation about my mother’s lack of fluency due to my Abuelo’s hard childhood and simply say “I’m Mexican.”
 
-My story is one of not just a language lost, but a legacy lost. I never gained the literacy that would have allowed me to claim my Abuelo’s homeland as my own. I cannot connect with my classmates who are just as Mexican as me by blood, but more Mexican than I’ll ever be by language. Their words are the stories of their ancestors that they will preserve for generations, stories that mirror the stories of my family which died before I was even born. The blanket that my Abuelo felt he had to threw over his own words shrouds a part of who I am, and because of it my story will always remain unfinished. 
+My story is one of not just a language lost, but a legacy lost. I never gained the literacy that would have allowed me to claim my Abuelo’s homeland as my own. I cannot connect with my classmates who are just as Mexican as me by blood, but more Mexican than I’ll ever be by language. Their words are the stories of their ancestors that they will preserve for generations, stories that mirror the stories of my family which died before I was even born. The blanket that my Abuelo felt he had to throw over his own words shrouds a part of who I am, and because of it my story will always remain unfinished. 
 
 
 

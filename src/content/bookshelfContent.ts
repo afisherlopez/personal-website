@@ -77,7 +77,7 @@ export const bookshelfPageContent: BookshelfPageContent = {
           title: "The Curious Mr. Feynman",
           creator: "Freakonomics",
           imageSrc: "/images/bookshelf/feynman.jpg",
-          notes: "Freakonomics talks about the most interesting physics character of all time. What more could you ask for.",
+          notes: "Stephen Dubner talks about the most interesting physics character of all time. What more could you ask for.",
         },
         {
           title: "Coca-Cola",
