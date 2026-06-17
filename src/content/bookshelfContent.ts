@@ -53,7 +53,7 @@ export const bookshelfPageContent: BookshelfPageContent = {
           title: "The Time Traveler's Wife",
           creator: "Audrey Niffenegger",
           imageSrc: "/images/bookshelf/time-travelers-wife.jpg",
-          notes: "A beautiful love story told from the perspective of a man who involuntarily time travels about his relationship with his wife. Fascinating relationship building and deeply emotional.",
+          notes: "A beautiful love story told from the perspectives of a man who involuntarily time travels and his wife. Fascinating relationship building and deeply emotional.",
         },
       ],
     },
