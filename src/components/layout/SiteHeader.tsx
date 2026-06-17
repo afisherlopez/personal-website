@@ -19,16 +19,16 @@ export default function SiteHeader({ activePage }: SiteHeaderProps) {
     >
       <div
         style={{
-          maxWidth: "960px",
+          maxWidth: "1180px",
           margin: "0 auto",
-          padding: "0.75rem 1.35rem",
+          padding: "0.82rem clamp(1.1rem, 3vw, 2rem)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           gap: "1rem",
           fontFamily: '"Faculty Glyphic", sans-serif',
           color: "#1f2937",
-          fontSize: "0.66rem",
+          fontSize: "clamp(0.67rem, 0.18vw + 0.63rem, 0.79rem)",
           letterSpacing: "0.01em",
         }}
       >
@@ -40,7 +40,7 @@ export default function SiteHeader({ activePage }: SiteHeaderProps) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.65rem",
+            gap: "clamp(0.52rem, 1.1vw, 0.88rem)",
             flexWrap: "wrap",
             justifyContent: "flex-end",
           }}

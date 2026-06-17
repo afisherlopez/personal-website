@@ -1859,3 +1859,29 @@ html {
   -moz-osx-font-smoothing: grayscale;
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.35));
 }
+
+/* Current site layout utilities */
+.about-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(225px, 285px);
+  align-items: center;
+  column-gap: 5.6rem;
+}
+
+.about-image-wrap {
+  justify-self: end;
+  width: 100%;
+  max-width: 285px;
+  align-self: center;
+}
+
+@media (max-width: 760px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
+
+  .about-image-wrap {
+    justify-self: start;
+    max-width: 165px;
+  }
+}

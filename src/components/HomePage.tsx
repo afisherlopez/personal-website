@@ -9,10 +9,10 @@ import {
 } from "../content/homePageContent";
 
 const sharedParagraphStyle = {
-  fontSize: "0.8rem",
-  lineHeight: 1.55,
+  fontSize: "clamp(0.86rem, 0.22vw + 0.8rem, 0.98rem)",
+  lineHeight: 1.6,
   color: "#2d3748",
-  marginBottom: "0.6rem",
+  marginBottom: "0.7rem",
   fontFamily: '"Faculty Glyphic", sans-serif',
 };
 
@@ -39,27 +39,28 @@ export default function HomePage({ currentPage }: HomePageProps) {
 
       <main
         style={{
-          maxWidth: "700px",
+          maxWidth: "950px",
           width: "100%",
           flex: 1,
           margin: "0 auto",
-          padding: "6.35rem 1.85rem 2rem",
+          padding: "5.9rem clamp(1.125rem, 3.75vw, 2.55rem) 1.4rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         {currentPage === "about" ? (
-          <section className="mb-16">
+          <section className="mb-12">
             <div
+              className="about-grid"
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(0, 1fr) minmax(120px, 165px)",
-                alignItems: "start",
-                columnGap: "1.5rem",
               }}
             >
               <div>
                 <h1
                   style={{
-                    fontSize: "1.25rem",
+                    fontSize: "clamp(1.26rem, 0.46vw + 1.14rem, 1.56rem)",
                     marginBottom: "0.8rem",
                     fontWeight: 700,
                     fontFamily: '"Faculty Glyphic", sans-serif',
@@ -68,15 +69,15 @@ export default function HomePage({ currentPage }: HomePageProps) {
                   {aboutSection.title}
                 </h1>
 
-                <p style={{ ...sharedParagraphStyle, marginBottom: "1.8rem" }}>
+                <p style={{ ...sharedParagraphStyle, marginBottom: "2.3rem" }}>
                   {aboutSection.intro}
                 </p>
 
                 {aboutSection.details.map((detail) => (
-                  <div key={detail.title} style={{ marginBottom: "1.8rem" }}>
+                  <div key={detail.title} style={{ marginBottom: "2.3rem" }}>
                     <h2
                       style={{
-                        fontSize: "1.02rem",
+                        fontSize: "clamp(1rem, 0.25vw + 0.94rem, 1.14rem)",
                         marginBottom: "0.6rem",
                         fontWeight: 700,
                         fontFamily: '"Faculty Glyphic", sans-serif',
@@ -103,7 +104,7 @@ export default function HomePage({ currentPage }: HomePageProps) {
                 ))}
               </div>
 
-              <div style={{ justifySelf: "end", width: "100%" }}>
+              <div className="about-image-wrap">
                 <ImageWithFallback
                   src={aboutSection.imageSrc}
                   alt={aboutSection.imageAlt}
@@ -119,10 +120,10 @@ export default function HomePage({ currentPage }: HomePageProps) {
             </div>
           </section>
         ) : currentSection ? (
-          <section className="mb-14">
+          <section className="mb-10">
             <h1
               style={{
-                fontSize: "1.25rem",
+                fontSize: "clamp(1.2rem, 0.4vw + 1.1rem, 1.46rem)",
                 marginBottom: "0.8rem",
                 fontWeight: 700,
                 fontFamily: '"Faculty Glyphic", sans-serif',
@@ -139,12 +140,20 @@ export default function HomePage({ currentPage }: HomePageProps) {
           </section>
         ) : null}
 
-        <footer
+      </main>
+
+      <footer
+        style={{
+          width: "100%",
+          borderTop: "1px solid rgba(17, 24, 39, 0.12)",
+        }}
+      >
+        <div
           style={{
-            marginTop: "1.25rem",
-            paddingTop: "1rem",
-            borderTop: "1px solid rgba(17, 24, 39, 0.12)",
-            fontSize: "0.72rem",
+            maxWidth: "950px",
+            margin: "0 auto",
+            padding: "0.85rem clamp(1.125rem, 3.75vw, 2.55rem) 0.2rem",
+            fontSize: "clamp(0.74rem, 0.14vw + 0.69rem, 0.82rem)",
             color: "#4a5568",
             fontFamily: '"Faculty Glyphic", sans-serif',
             textAlign: "right",
@@ -172,14 +181,14 @@ export default function HomePage({ currentPage }: HomePageProps) {
               </span>
             ))}
           </div>
-        </footer>
-      </main>
+        </div>
+      </footer>
 
       <div
         style={{
           width: "100%",
-          padding: "0.2rem 1.35rem 0.9rem",
-          fontSize: "0.6rem",
+          padding: "0.15rem 1rem 0.85rem",
+          fontSize: "clamp(0.6rem, 0.12vw + 0.57rem, 0.68rem)",
           color: "#6b7280",
           fontFamily: '"Faculty Glyphic", sans-serif',
           textAlign: "right",
