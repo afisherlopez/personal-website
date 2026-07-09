@@ -1903,6 +1903,49 @@ html {
 }
 
 @media (max-width: 760px) {
+  .projects-row-list {
+    gap: 0.9rem !important;
+  }
+
+  .projects-row-list button {
+    grid-template-columns: 1fr !important;
+    gap: 0.7rem !important;
+    padding: 0.7rem !important;
+  }
+
+  .projects-row-polaroid {
+    transform: none !important;
+    max-width: 100% !important;
+  }
+
+  .projects-modal-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .projects-whiteboard {
+    margin: 0 !important;
+    padding: 0.8rem !important;
+  }
+
+  .projects-whiteboard-top {
+    grid-template-columns: 1fr !important;
+    gap: 0.9rem !important;
+  }
+
+  .projects-board-polaroid-wrap {
+    max-width: 250px !important;
+    padding-top: 0.6rem !important;
+  }
+
+  .projects-board-meta {
+    padding-right: 2.9rem !important;
+  }
+
+  .projects-board-notes {
+    padding: 0.78rem 0.82rem 0.85rem !important;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     grid-template-areas:

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HomePage from "./components/HomePage";
 import BookshelfPage from "./components/pages/BookshelfPage";
 import WritingPage from "./components/pages/WritingPage";
+import ProjectsPage from "./components/pages/ProjectsPage";
 import { defaultPage, navItems, type PageId } from "./content/homePageContent";
 
 const pageIds = new Set(navItems.map((item) => item.id));
@@ -53,6 +54,10 @@ export default function App() {
 
   if (currentPage === "writing") {
     return <WritingPage currentPage={currentPage} routeSegments={routeSegments} />;
+  }
+
+  if (currentPage === "projects") {
+    return <ProjectsPage currentPage={currentPage} />;
   }
 
   return <HomePage currentPage={currentPage} />;

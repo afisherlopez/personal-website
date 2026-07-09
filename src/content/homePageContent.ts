@@ -74,13 +74,6 @@ export const aboutSection: AboutSectionContent = {
 
 export const pageSections: PageSection[] = [
   {
-    id: "projects",
-    title: "Projects section in progress!",
-    paragraphs: [
-      "",
-    ],
-  },
-  {
     id: "photobook",
     title: "Photobook section in progress!",
     paragraphs: [
