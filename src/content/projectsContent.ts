@@ -67,6 +67,23 @@ export const projectsPageContent: ProjectsPageContent = {
             "Capable of segmenting either at a high hierarchical level of materials (e.g. biotic vs. abiotic) or at a finer level (e.g. granite vs. marble vs. tree bark vs. leather, etc.) .",
           ],
         },
+        {
+          id: "bat-dictionary",
+          title: "Bat Dictionary",
+          tags: ["Graph Neural Networks"],
+          oneLineDescription:
+            "Developed a pipeline to perform material-based image segmentation using a novel taxonomical hierarchy approach.",
+          repoUrl: "https://github.com/afisherlopez/matSeparate2.0",
+          pdfUrl: "/pdfs/matSeparate-paper.pdf",
+          imageSrc: "images/projects/matSeparate.jpg",
+          overview:
+            "For our CS 231N final project, my group and I attempted to create a faster image segmentation pipeline than the SOTA (Segment Anything Model, or SAM) by classifying patches into different material categories, at different hierarchical levels. Although our algorithm ran much more quickly than SAM, the accuracy was much lower. But lots was learned along the way!",
+          highlights: [
+            "Used Amazon EC2 to train a ResNet-50 and HGNN classifier for material identification with ablations of local and global context.",
+            "Developed a segmentation algorithm using a material probability map, bilinear upsampling, and SLIC superpixels.",
+            "Capable of segmenting either at a high hierarchical level of materials (e.g. biotic vs. abiotic) or at a finer level (e.g. granite vs. marble vs. tree bark vs. leather, etc.) .",
+          ],
+        },
       ],
     },
     {
@@ -106,7 +123,6 @@ export const projectsPageContent: ProjectsPageContent = {
           tags: ["Black Hole Research"],
           oneLineDescription:
             "Examining X-Ray emission spectra from black holes.",
-          repoUrl: "https://github.com/annafisherlopez/field-notes-synthesis",
           imageSrc: "/images/projects/kipac.jpeg",
           overview:
             "Did part-time undergraduate research with Dan Wilkins examining X-Ray emission spectra from the black hole at the center of the Markarian 335 galaxy.",
