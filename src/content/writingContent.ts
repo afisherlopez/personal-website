@@ -3,6 +3,7 @@ import successStoryBody from "./writing/success-story.md?raw";
 import foundInTheNothingnessBody from "./writing/found-in-the-nothingness.md?raw";
 import theIntegralBody from "./writing/the-integral.md?raw";
 import wayOpensBody from "./writing/way-opens.md?raw";
+import oneMonthAgoBody from "./writing/one-month-ago.md?raw";
 
 export interface WritingEntry {
   id: string;
@@ -29,6 +30,12 @@ export interface WritingPageContent {
 export const writingPageContent: WritingPageContent = {
   pageTitle: "writing",
   entries: [
+    {
+      id: "one-month-ago",
+      title: "One month ago, I moved to San Francisco",
+      publishedOn: "Jul 13, 2026",
+      body: oneMonthAgoBody,
+    },
     {
       id: "the-lake",
       title: "The Lake",
