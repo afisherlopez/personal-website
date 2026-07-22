@@ -48,7 +48,7 @@ export const projectsPageContent: ProjectsPageContent = {
     },
     {
       id: "ml-research",
-      label: "ML Research (section in progress)",
+      label: "ML Research",
       items: [
         {
           id: "matSeparate",
@@ -67,6 +67,35 @@ export const projectsPageContent: ProjectsPageContent = {
             "Capable of segmenting either at a high hierarchical level of materials (e.g. biotic vs. abiotic) or at a finer level (e.g. granite vs. marble vs. tree bark vs. leather, etc.) .",
           ],
         },
+        {
+          id: "batDictionary",
+          title: "Bat Dictionary",
+          tags: ["Graph Neural Networks"],
+          oneLineDescription:
+            "Identified repeating patterns in bat communication chirps using GNNs.",
+          repoUrl: "https://github.com/afisherlopez/BatDictionary",
+          pdfUrl: "https://medium.com/stanford-cs224w/bat-banter-using-unsupervised-graph-based-clustering-to-discover-phrases-in-bat-communication-b5e11145dbe6?sharedUserId=annafisherlopez",
+          imageSrc: "images/projects/bats.jpg",
+          overview:
+            "I identified recurrent patterns in recordings of bat chirps from Jasper Ridge Biological Preserve using Graph Attention Networks, Deep Modularity Networks. I demonstrated that sequences of chirps can be classified into meaningful clusters, and identified the acoustic features for each chirp which most contributed to its classification, lending interpretable acoustic traits to each cluster. To learn more, read the Medium article I wrote about the project [here](https://medium.com/stanford-cs224w/bat-banter-using-unsupervised-graph-based-clustering-to-discover-phrases-in-bat-communication-b5e11145dbe6?sharedUserId=annafisherlopez).",
+        },
+        {
+          id: "roboPianist",
+          title: "RoboPianist",
+          tags: ["Reinforcement Learning"],
+          oneLineDescription:
+            "Investigated the effect of a scale curriculum on a Robot Pianist's ability to play Chopin’s Nocturne in E flat-Major.",
+          repoUrl: "https://github.com/ericmartz15/robopianist-224r",
+          pdfUrl: "/pdfs/roboPianist_paper.pdf",
+          imageSrc: "images/projects/robopianist.webp",
+          overview:
+            "We built upon an existing RL Robot Pianist model to see what would improve or reduce piano-playing performance. Lots of classical music and ~~traumatic~~ fond memories of childhood piano playing along the way.",
+          highlights: [
+            "Built upon an Actor-Critic model build by Zakka et al. (see paper for more details)", 
+            "Demonstrated that curriculum training, whether it be scales or arpeggios, decreases performance",
+            "Showed that introducing a key press timing term into the loss function (called onset timing in the paper) improves performance"
+          ]
+          },
       ],
     },
     {

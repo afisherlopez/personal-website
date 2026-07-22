@@ -43,6 +43,62 @@ function normalizeImageSrc(src: string): string {
   return trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
 }
 
+function renderInlineFormatting(text: string): React.ReactNode[] {
+  const tokenPattern = /(\[([^\]]+)\]\(([^)]+)\)|~~([^~]+)~~)/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null = tokenPattern.exec(text);
+
+  while (match) {
+    const [fullMatch] = match;
+    const matchStart = match.index;
+
+    if (matchStart > lastIndex) {
+      nodes.push(text.slice(lastIndex, matchStart));
+    }
+
+    if (fullMatch.startsWith("~~")) {
+      nodes.push(
+        <span key={`projects-inline-strike-${matchStart}`} style={{ textDecoration: "line-through" }}>
+          {fullMatch.slice(2, -2)}
+        </span>,
+      );
+    } else {
+      const linkMatch = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(fullMatch);
+
+      if (linkMatch) {
+        const [, label, href] = linkMatch;
+        const normalizedHref = href.trim();
+        const isExternal =
+          normalizedHref.startsWith("http://") || normalizedHref.startsWith("https://");
+
+        nodes.push(
+          <a
+            key={`projects-inline-link-${matchStart}`}
+            href={normalizedHref}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer" : undefined}
+            style={{ textDecoration: "underline", textUnderlineOffset: "2px", color: "#2f4c7b" }}
+          >
+            {label}
+          </a>,
+        );
+      } else {
+        nodes.push(fullMatch);
+      }
+    }
+
+    lastIndex = matchStart + fullMatch.length;
+    match = tokenPattern.exec(text);
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
 export default function ProjectsPage({ currentPage }: ProjectsPageProps) {
   const [selectedProject, setSelectedProject] = useState<SelectedProjectState | null>(null);
 
@@ -437,7 +493,7 @@ export default function ProjectsPage({ currentPage }: ProjectsPageProps) {
                   }}
                 >
                   <p style={{ fontSize: "0.88rem", color: "#2d3748", lineHeight: 1.68 }}>
-                    {selectedProject.project.overview}
+                    {renderInlineFormatting(selectedProject.project.overview)}
                   </p>
 
                   {selectedProject.project.highlights?.length ? (
@@ -458,7 +514,7 @@ export default function ProjectsPage({ currentPage }: ProjectsPageProps) {
                             lineHeight: 1.55,
                           }}
                         >
-                          • {highlight}
+                          • {renderInlineFormatting(highlight)}
                         </p>
                       ))}
                     </div>
