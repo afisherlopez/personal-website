@@ -36,7 +36,7 @@ export const projectsPageContent: ProjectsPageContent = {
         {
           id: "ember",
           title: "EMBER",
-          tags: ["Data Engineering", "Wildfire Economics"],
+          tags: ["Data Engineering", "Wildfire Risk Assessment"],
           oneLineDescription:
             "Quantifying and visualizing the financial impacts of wildfires on water utilities.",
           repoUrl: "https://github.com/afisherlopez/EMBER",
