@@ -83,6 +83,7 @@ export const pageSections: PageSection[] = [
 ];
 
 export const footerPrimaryLinks: FooterLink[] = [
+  { label: "github", href: "https://github.com/afisherlopez" },
   { label: "email", href: "mailto:annafisherlopez@gmail.com" },
   { label: "linkedin", href: "https://www.linkedin.com/in/anna-fisher-lopez" },
 ];
