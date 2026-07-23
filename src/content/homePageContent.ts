@@ -57,7 +57,7 @@ export const aboutSection: AboutSectionContent = {
   details: [
     {
       title: "Currently",
-      text: "I work at ",
+      text: "I'm interning at ",
       linkLabel: "Blue Forest",
       linkHref: "https://blueforest.org",
       linkTrailingText:
