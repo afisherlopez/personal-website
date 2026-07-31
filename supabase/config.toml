@@ -1,0 +1,11 @@
+[functions.strava-oauth-start]
+verify_jwt = true
+
+[functions.strava-oauth-callback]
+verify_jwt = false
+
+[functions.strava-sync]
+verify_jwt = true
+
+[functions.runna-sync]
+verify_jwt = true

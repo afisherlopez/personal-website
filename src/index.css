@@ -1902,7 +1902,607 @@ html {
   display: none;
 }
 
+.training-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 2%, rgba(212, 106, 76, 0.08), transparent 24rem),
+    #f4fcf2;
+  color: #20302b;
+  font-family: "Faculty Glyphic", sans-serif;
+}
+
+.training-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(25, 40, 35, 0.12);
+  background: rgba(244, 252, 242, 0.94);
+  backdrop-filter: blur(12px);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+
+.training-brand {
+  width: fit-content;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.training-sync-state {
+  justify-self: end;
+  color: #67736e;
+  font-size: 0.67rem;
+}
+
+.training-main {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 3rem) 4rem;
+}
+
+.training-hero {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(360px, 1.28fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  margin-bottom: 2rem;
+}
+
+.training-polaroid {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 350px);
+  margin: 0;
+  padding: 0.75rem 0.75rem 3.65rem;
+  transform: rotate(-1.25deg);
+  background: #fffdf8;
+  box-shadow:
+    0 1.1rem 2.5rem rgba(36, 48, 42, 0.16),
+    0 0.15rem 0.35rem rgba(36, 48, 42, 0.12);
+}
+
+.training-polaroid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.training-polaroid figcaption {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 1rem;
+  left: 0.75rem;
+  color: #20231f;
+  font-family: "Marker Felt", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: 0.015em;
+  line-height: 1;
+  text-align: center;
+  transform: rotate(0.5deg);
+}
+
+.training-eyebrow {
+  color: #78827d;
+  font-size: 0.64rem !important;
+  letter-spacing: 0.13em;
+  line-height: 1.4 !important;
+}
+
+.training-hero h1 {
+  max-width: 620px;
+  margin: 0.35rem 0 0.65rem;
+  font-family: "Faculty Glyphic", sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.training-hero > div:first-child > p:last-child {
+  max-width: 560px;
+  color: #59655f;
+  font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+  line-height: 1.6;
+}
+
+.training-race-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.training-race-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.training-race-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.7rem;
+  align-items: center;
+  min-height: 145px;
+  overflow: hidden;
+  padding: 1.25rem 1rem;
+  border: 1px solid rgba(25, 40, 35, 0.13);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(235, 241, 232, 0.55));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.training-race-card:first-child {
+  min-height: 145px;
+}
+
+.training-race-card:first-child strong {
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  letter-spacing: -0.025em;
+}
+
+.training-race-card::after {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -2.7rem;
+  width: 7rem;
+  height: 7rem;
+  border: 1px solid rgba(32, 60, 52, 0.06);
+  border-radius: 50%;
+  content: "";
+}
+
+.training-race-card strong {
+  display: block;
+  color: #2c3b35;
+  font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+  line-height: 1.25;
+}
+
+.training-race-card p {
+  color: #6b7671;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.training-race-card > span:last-child {
+  color: #2c3b35;
+  font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.training-panel {
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border: 1px solid rgba(25, 40, 35, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 8px 30px rgba(31, 49, 42, 0.045);
+}
+
+.training-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.training-panel h2,
+.training-strava-panel h2 {
+  margin-top: 0.2rem;
+  font-family: "Faculty Glyphic", sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  font-weight: 700;
+}
+
+.training-period-distance {
+  margin-top: 0.25rem;
+  color: #7b8580;
+  font-size: 0.65rem;
+}
+
+.training-toolbar,
+.training-view-toggle,
+.training-strava-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.training-toolbar button,
+.training-strava-actions button {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(25, 40, 35, 0.16);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.training-view-toggle {
+  padding: 0.18rem;
+  border-radius: 8px;
+  background: #e8efe5;
+}
+
+.training-view-toggle button {
+  border: 0;
+  background: transparent;
+}
+
+.training-view-toggle button.active {
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(25, 40, 35, 0.1);
+}
+
+.training-primary-button {
+  border-color: #203c34 !important;
+  background: #203c34 !important;
+  color: #f8fbf7 !important;
+}
+
+.training-inline-form {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr) auto;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: #edf3ea;
+}
+
+.training-calendar {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(25, 40, 35, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.training-calendar-week,
+.training-calendar-month {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.training-day {
+  min-width: 0;
+  min-height: 160px;
+  padding: 0.65rem;
+  border-right: 1px solid rgba(25, 40, 35, 0.1);
+  border-bottom: 1px solid rgba(25, 40, 35, 0.1);
+}
+
+.training-calendar-month .training-day {
+  min-height: 125px;
+}
+
+.training-day:nth-child(7n) {
+  border-right: 0;
+}
+
+.training-day.muted {
+  background: rgba(233, 239, 231, 0.55);
+  color: #9ba49f;
+}
+
+.training-day-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+}
+
+.training-day-heading span {
+  color: #7b8580;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+}
+
+.training-day-heading strong {
+  font-size: 0.72rem;
+}
+
+.training-day-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.training-session {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+  border-left: 3px solid;
+  border-radius: 5px;
+  background: rgba(244, 248, 242, 0.96);
+  cursor: pointer;
+  text-align: left;
+}
+
+.training-session > span {
+  color: #7a847e;
+  font-size: 0.53rem;
+  text-transform: uppercase;
+}
+
+.training-session strong {
+  margin: 0.12rem 0;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.training-session small {
+  color: #68736d;
+  font-size: 0.56rem;
+}
+
+.training-session.complete {
+  opacity: 0.55;
+}
+
+.training-session.complete strong {
+  text-decoration: line-through;
+}
+
+.training-session:disabled {
+  cursor: default;
+}
+
+.training-two-column {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.training-chart {
+  min-height: 260px;
+  padding: 0.7rem;
+}
+
+.training-chart svg {
+  width: 100%;
+  height: 205px;
+  overflow: visible;
+}
+
+.training-chart line {
+  stroke: rgba(25, 40, 35, 0.16);
+  stroke-width: 0.5;
+}
+
+.training-chart polyline {
+  fill: none;
+  stroke: #775b8f;
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.training-chart circle {
+  fill: #f4fcf2;
+  stroke: #775b8f;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.training-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.training-chart-labels span {
+  display: flex;
+  flex-direction: column;
+  color: #78827d;
+  font-size: 0.55rem;
+}
+
+.training-chart-labels strong {
+  color: #35413c;
+  font-size: 0.62rem;
+}
+
+.training-strength-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.training-strength-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #67736e;
+  font-size: 0.65rem;
+}
+
+.training-strength-form > div {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr;
+  gap: 0.5rem;
+}
+
+.training-strength-form button {
+  width: fit-content;
+  padding: 0.58rem 0.85rem;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.training-strava-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1.25rem 1.4rem;
+  border-radius: 14px;
+  background: #ebe5df;
+}
+
+.training-strava-panel > div:nth-child(2) > p:last-child {
+  margin-top: 0.25rem;
+  color: #68716d;
+  font-size: 0.72rem;
+}
+
+.training-strava-mark {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 10px;
+  background: #fc4c02;
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
 @media (max-width: 760px) {
+  .training-header {
+    grid-template-columns: auto 1fr;
+  }
+
+  .training-header > span:nth-child(2) {
+    text-align: right;
+  }
+
+  .training-sync-state {
+    display: none;
+  }
+
+  .training-main {
+    padding-top: 2rem;
+  }
+
+  .training-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .training-race-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .training-race-card:first-child {
+    grid-column: auto;
+  }
+
+  .training-panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .training-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .training-inline-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .training-calendar {
+    overflow-x: hidden;
+  }
+
+  .training-calendar-week {
+    display: block;
+  }
+
+  .training-calendar-week .training-day {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 0.8rem;
+    min-height: 92px;
+    padding: 0.8rem;
+    border-right: 0;
+  }
+
+  .training-calendar-week .training-day:last-child {
+    border-bottom: 0;
+  }
+
+  .training-calendar-week .training-day-heading {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    margin: 0;
+    padding-top: 0.1rem;
+  }
+
+  .training-calendar-week .training-day-heading span {
+    font-size: 0.62rem;
+    font-weight: 700;
+  }
+
+  .training-calendar-week .training-day-heading strong {
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 50%;
+    font-size: 0.85rem;
+  }
+
+  .training-calendar-week .training-day.today .training-day-heading strong {
+    background: #203c34;
+    color: #f8fbf7;
+  }
+
+  .training-calendar-week .training-day-sessions {
+    justify-content: center;
+  }
+
+  .training-calendar-week .training-day-sessions:empty::after {
+    color: #919b96;
+    content: "Rest day";
+    font-size: 0.68rem;
+    font-style: italic;
+  }
+
+  .training-calendar-week .training-session {
+    padding: 0.7rem 0.75rem;
+    border-radius: 7px;
+  }
+
+  .training-calendar-week .training-session strong {
+    font-size: 0.74rem;
+  }
+
+  .training-calendar-month {
+    overflow-x: auto;
+    grid-template-columns: repeat(7, minmax(145px, 1fr));
+  }
+
+  .training-two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .training-strava-panel {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .training-strava-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+
   .projects-row-list {
     gap: 0.9rem !important;
   }
