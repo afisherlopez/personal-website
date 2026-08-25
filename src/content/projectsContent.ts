@@ -9,6 +9,7 @@ export interface ProjectItem {
   tags: string[];
   oneLineDescription: string;
   repoUrl?: string;
+  repoLinkLabel?: string;
   pdfUrl?: string;
   imageSrc: string;
   overview: string;
@@ -39,10 +40,11 @@ export const projectsPageContent: ProjectsPageContent = {
           tags: ["Data Engineering", "Wildfire Risk Assessment"],
           oneLineDescription:
             "Quantifying and visualizing the financial impacts of wildfires on water utilities.",
-          repoUrl: "https://github.com/afisherlopez/EMBER",
+          repoUrl: "https://ember-dashboard.streamlit.app/",
+          repoLinkLabel: "Check out EMBER!",
           imageSrc: "/images/projects/blue-forest.jpg",
           overview:
-            "At Blue Forest, my co-intern Eric and I are building a scalable database in the form of an interactive Streamlit dashboard called EMBER to measure the impacts of wildfires on water resources and water utilities. I'm heading the software development, product research, and geospatial data collection, and Eric is heading the financial data collection and case study analysis. EMBER is currently only available for internal use at Blue Forest, but the goal is to make it public by the end of the summer!",
+            "At Blue Forest, my co-intern Eric and I are building a scalable database in the form of an interactive Streamlit dashboard called EMBER to measure the impacts of wildfires on water resources and water utilities. I'm heading the software development, product research, and geospatial data collection, and Eric is heading the financial data collection and case study analysis. Check it out [here](https://ember-dashboard.streamlit.app/)!",
         },
       ],
     },

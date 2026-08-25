@@ -439,7 +439,7 @@ export default function ProjectsPage({ currentPage }: ProjectsPageProps) {
                               </svg>
                             </span>
                             <span style={{ textDecoration: "underline", textUnderlineOffset: "2px" }}>
-                              Link to Repo
+                              {selectedProject.project.repoLinkLabel ?? "Link to Repo"}
                             </span>
                           </a>
                         ) : null}

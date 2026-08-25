@@ -2105,10 +2105,17 @@ html {
   font-weight: 700;
 }
 
+.training-period-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+}
+
 .training-period-distance {
-  margin-top: 0.25rem;
   color: #7b8580;
   font-size: 0.65rem;
+  white-space: nowrap;
 }
 
 .training-toolbar,

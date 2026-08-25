@@ -93,10 +93,36 @@ function extractDurationMinutes(text: string): number {
 }
 
 function extractDistanceKm(text: string): number | null {
-  const kmMatch = /(\d+(?:\.\d+)?)\s*(?:km|kilometres|kilometers)\b/i.exec(text);
-  if (kmMatch) return Math.round(Number(kmMatch[1]) * 100) / 100;
-  const mileMatch = /(\d+(?:\.\d+)?)\s*(?:mi|mile|miles)\b/i.exec(text);
-  return mileMatch ? Math.round(Number(mileMatch[1]) * 1.60934 * 100) / 100 : null;
+  const match =
+    /(\d+(?:\.\d+)?)\s*(km|kilometres?|kilometers?|mi|miles?)\b/i.exec(text);
+  if (!match) return null;
+  const distance = Number(match[1]);
+  const isMiles = match[2].toLowerCase().startsWith("mi");
+  return Math.round(distance * (isMiles ? 1.60934 : 1) * 100) / 100;
+}
+
+function parseRunnaTitle(title: string): {
+  baseTitle: string;
+  completionMetric?: string;
+} {
+  const separatorMatch = /^(.*?)\s+[·•]\s+(.+)$/.exec(title);
+  if (!separatorMatch) return { baseTitle: title.trim() };
+
+  const [, baseTitle, suffix] = separatorMatch;
+  const hasCompletionMetric =
+    /\d+(?:\.\d+)?\s*(?:mi|miles?|km|kilometres?|kilometers?|m|min|mins|minutes?)\b/i
+      .test(suffix);
+  return hasCompletionMetric
+    ? { baseTitle: baseTitle.trim(), completionMetric: suffix.trim() }
+    : { baseTitle: title.trim() };
+}
+
+function normalizeRunnaTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 Deno.serve(async (request) => {
@@ -131,35 +157,114 @@ Deno.serve(async (request) => {
     const admin = createClient(supabaseUrl, serviceRoleKey);
     const { data: existingRows, error: existingError } = await admin
       .from("training_workouts")
-      .select("external_uid, completed, duration_minutes, distance_km, matched_strava_activity_id")
+      .select(
+        "id, external_uid, workout_date, title, sport, completed, duration_minutes, distance_km, planned_duration_minutes, planned_distance_km, matched_strava_activity_id",
+      )
       .eq("owner_id", user.id)
       .eq("source", "runna");
     if (existingError) throw existingError;
     const existingByUid = new Map(
       (existingRows ?? []).map((row) => [row.external_uid, row]),
     );
+    type ExistingRow = NonNullable<typeof existingRows>[number];
+    const existingByWorkout = new Map<string, ExistingRow[]>();
+    for (const row of existingRows ?? []) {
+      const baseTitle = parseRunnaTitle(row.title).baseTitle;
+      const key =
+        `${row.workout_date}|${row.sport}|${normalizeRunnaTitle(baseTitle)}`;
+      const group = existingByWorkout.get(key) ?? [];
+      group.push(row);
+      existingByWorkout.set(key, group);
+    }
 
-    const rows = events.map((event) => {
-      const combinedText = `${event.title}\n${event.description}`;
-      const durationMinutes = extractDurationMinutes(combinedText);
-      const distanceKm = extractDistanceKm(combinedText);
-      const existing = existingByUid.get(event.uid);
+    const groupedEvents = new Map<
+      string,
+      {
+        baseTitle: string;
+        planned?: CalendarEvent;
+        completion?: CalendarEvent;
+        plannedMetric?: string;
+      }
+    >();
+
+    for (const event of events) {
+      const { baseTitle, completionMetric } = parseRunnaTitle(event.title);
+      const key = `${event.date}|${inferSport(baseTitle)}|${normalizeRunnaTitle(baseTitle)}`;
+      const group = groupedEvents.get(key) ?? { baseTitle };
+      if (completionMetric) {
+        group.baseTitle = baseTitle;
+        group.planned = event;
+        group.plannedMetric = completionMetric;
+      } else {
+        if (!group.planned) group.baseTitle = baseTitle;
+        group.completion = event;
+      }
+      groupedEvents.set(key, group);
+    }
+
+    const staleRowIds = new Set<string>();
+    const rows = [...groupedEvents.values()].map((group) => {
+      const primaryEvent = group.planned ?? group.completion!;
+      const existingPrimary = existingByUid.get(primaryEvent.uid);
+      const workoutKey =
+        `${primaryEvent.date}|${inferSport(group.baseTitle)}|${normalizeRunnaTitle(group.baseTitle)}`;
+      const existingWorkoutRows = existingByWorkout.get(workoutKey) ?? [];
+      const existingCompletion =
+        (group.completion ? existingByUid.get(group.completion.uid) : undefined) ??
+        existingWorkoutRows.find((row) => row.completed);
+      const plannedText = `${group.plannedMetric ?? group.baseTitle}\n${group.planned?.description ?? primaryEvent.description}`;
+      const plannedDurationMinutes = extractDurationMinutes(plannedText);
+      const plannedDistanceKm = extractDistanceKm(plannedText);
+      const completionDistanceKm = group.completion
+        ? extractDistanceKm(`${group.completion.title}\n${group.completion.description}`)
+        : null;
+      const completed =
+        Boolean(group.completion) ||
+        Boolean(existingPrimary?.completed) ||
+        Boolean(existingCompletion?.completed);
+
+      for (const row of existingWorkoutRows) {
+        if (row.external_uid !== primaryEvent.uid) staleRowIds.add(row.id);
+      }
+
       return {
         owner_id: user.id,
-        workout_date: event.date,
-        title: event.title,
-        sport: inferSport(event.title),
-        duration_minutes: existing?.completed ? existing.duration_minutes : durationMinutes,
-        distance_km: existing?.completed ? existing.distance_km : distanceKm,
-        planned_duration_minutes: durationMinutes || null,
-        planned_distance_km: distanceKm,
-        completed: existing?.completed ?? false,
+        workout_date: primaryEvent.date,
+        title: group.baseTitle,
+        sport: inferSport(group.baseTitle),
+        duration_minutes: completed
+          ? existingPrimary?.duration_minutes ??
+            existingCompletion?.duration_minutes ??
+            plannedDurationMinutes
+          : plannedDurationMinutes,
+        distance_km: completed
+          ? completionDistanceKm ??
+            existingPrimary?.distance_km ??
+            existingCompletion?.distance_km ??
+            plannedDistanceKm
+          : plannedDistanceKm,
+        planned_duration_minutes:
+          plannedDurationMinutes ||
+          existingPrimary?.planned_duration_minutes ||
+          existingCompletion?.planned_duration_minutes ||
+          null,
+        planned_distance_km:
+          plannedDistanceKm ??
+          existingPrimary?.planned_distance_km ??
+          existingCompletion?.planned_distance_km ??
+          null,
+        completed,
         source: "runna",
-        notes: [event.url ? `RUNNA_URL:${event.url}` : "", event.description]
-          .filter(Boolean)
-          .join("\n") || null,
-        external_uid: event.uid,
-        matched_strava_activity_id: existing?.matched_strava_activity_id ?? null,
+        notes:
+          [
+            primaryEvent.url ? `RUNNA_URL:${primaryEvent.url}` : "",
+            primaryEvent.description,
+          ]
+            .filter(Boolean)
+            .join("\n") || null,
+        external_uid: primaryEvent.uid,
+        matched_strava_activity_id:
+          existingPrimary?.matched_strava_activity_id ?? null,
       };
     });
 
@@ -173,7 +278,20 @@ Deno.serve(async (request) => {
       if (upsertError) throw upsertError;
     }
 
-    return Response.json({ imported: rows.length }, { headers: corsHeaders });
+    if (staleRowIds.size) {
+      const { error: deleteError } = await admin
+        .from("training_workouts")
+        .delete()
+        .eq("owner_id", user.id)
+        .eq("source", "runna")
+        .in("id", [...staleRowIds]);
+      if (deleteError) throw deleteError;
+    }
+
+    return Response.json(
+      { imported: rows.length, merged: staleRowIds.size },
+      { headers: corsHeaders },
+    );
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Unable to sync Runna" },

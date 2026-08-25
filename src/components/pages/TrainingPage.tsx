@@ -18,6 +18,7 @@ const dayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "short" });
 const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
 const shortDateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
 const kilometersToMiles = 0.621371;
+const poundsPerKilogram = 2.20462;
 const sortedRaceGoals = [...raceGoals].sort((a, b) => a.date.localeCompare(b.date));
 
 function toDateKey(date: Date): string {
@@ -106,6 +107,8 @@ function workoutFromRow(row: Record<string, unknown>): TrainingWorkout {
     sport: row.sport as TrainingSport,
     durationMinutes: Number(row.duration_minutes ?? 0),
     distanceKm: row.distance_km == null ? undefined : Number(row.distance_km),
+    plannedDistanceKm:
+      row.planned_distance_km == null ? undefined : Number(row.planned_distance_km),
     completed: source === "strava" || Boolean(row.completed),
     source,
     notes,
@@ -150,7 +153,7 @@ export default function TrainingPage() {
   const [strengthDraft, setStrengthDraft] = useState({
     performedOn: toDateKey(new Date()),
     exercise: "Back squat",
-    weightKg: "",
+    weightLbs: "",
     reps: "5",
     sets: "3",
   });
@@ -174,7 +177,10 @@ export default function TrainingPage() {
       const remoteStrength = (strengthResult.data ?? []).map((row) => strengthFromRow(row));
 
       setWorkouts(remoteWorkouts);
-      setStrengthEntries(remoteStrength);
+      setStrengthEntries((current) => {
+        const pendingLocalEntries = current.filter((entry) => entry.id.startsWith("local-"));
+        return [...remoteStrength, ...pendingLocalEntries];
+      });
       setSyncStatus("Saved with Supabase");
     } catch (error) {
       console.error(error);
@@ -280,10 +286,18 @@ export default function TrainingPage() {
     const end = addDays(start, 7);
     const week = workouts.filter((workout) => {
       const date = parseDateKey(workout.workoutDate);
-      return date >= start && date < end;
+      return date >= start && date < end && workout.sport === "run";
     });
     return {
-      distance: week.reduce((total, workout) => total + (workout.distanceKm ?? 0), 0),
+      completedDistance: week.reduce(
+        (total, workout) => total + (workout.completed ? workout.distanceKm ?? 0 : 0),
+        0,
+      ),
+      plannedDistance: week.reduce(
+        (total, workout) =>
+          total + (workout.plannedDistanceKm ?? workout.distanceKm ?? 0),
+        0,
+      ),
     };
   }, [focusDate, workouts]);
 
@@ -365,31 +379,40 @@ export default function TrainingPage() {
       id: `local-${crypto.randomUUID()}`,
       performedOn: strengthDraft.performedOn,
       exercise: strengthDraft.exercise,
-      weightKg: Number(strengthDraft.weightKg),
+      weightKg: Number(strengthDraft.weightLbs) / poundsPerKilogram,
       reps: Number(strengthDraft.reps),
       sets: Number(strengthDraft.sets),
     };
 
     if (supabase) {
-      const session = await ensureAnonymousSession();
-      const { data, error } = await supabase
-        .from("strength_entries")
-        .insert({
-          owner_id: session?.user.id,
-          performed_on: draft.performedOn,
-          exercise: draft.exercise,
-          weight_kg: draft.weightKg,
-          reps: draft.reps,
-          sets: draft.sets,
-        })
-        .select()
-        .single();
-      if (!error && data) draft.id = String(data.id);
+      try {
+        const session = await ensureAnonymousSession();
+        if (!session) throw new Error("Unable to start a Supabase session");
+
+        const { data, error } = await supabase
+          .from("strength_entries")
+          .insert({
+            owner_id: session.user.id,
+            performed_on: draft.performedOn,
+            exercise: draft.exercise,
+            weight_kg: draft.weightKg,
+            reps: draft.reps,
+            sets: draft.sets,
+          })
+          .select()
+          .single();
+        if (error) throw error;
+        draft.id = String(data.id);
+        setSyncStatus("Lift saved with Supabase");
+      } catch (error) {
+        console.error("Unable to save lift to Supabase", error);
+        setSyncStatus("Lift saved locally · Supabase save failed");
+      }
     }
 
     setStrengthEntries((current) => [...current, draft]);
     setSelectedExercise(draft.exercise);
-    setStrengthDraft((current) => ({ ...current, weightKg: "" }));
+    setStrengthDraft((current) => ({ ...current, weightLbs: "" }));
   };
 
   const connectStrava = async () => {
@@ -460,12 +483,16 @@ export default function TrainingPage() {
           <div className="training-panel-header">
             <div>
               <p className="training-eyebrow">TRAINING PLAN</p>
-              <h2>{calendarView === "month" ? monthFormatter.format(focusDate) : `Week of ${shortDateFormatter.format(startOfWeek(focusDate))}`}</h2>
-              {calendarView === "week" ? (
-                <p className="training-period-distance">
-                  {(weeklyTotals.distance * kilometersToMiles).toFixed(1)} mi total
-                </p>
-              ) : null}
+              <div className="training-period-heading">
+                <h2>{calendarView === "month" ? monthFormatter.format(focusDate) : `Week of ${shortDateFormatter.format(startOfWeek(focusDate))}`}</h2>
+                {calendarView === "week" ? (
+                  <span className="training-period-distance">
+                    {(weeklyTotals.completedDistance * kilometersToMiles).toFixed(1)} mi completed
+                    {" / "}
+                    {(weeklyTotals.plannedDistance * kilometersToMiles).toFixed(1)} mi planned
+                  </span>
+                ) : null}
+              </div>
             </div>
             <div className="training-toolbar">
               <button onClick={() => changePeriod(-1)} aria-label="Previous period">←</button>
@@ -566,7 +593,10 @@ export default function TrainingPage() {
                   </svg>
                   <div className="training-chart-labels">
                     {selectedStrengthData.map((entry) => (
-                      <span key={entry.id}>{shortDateFormatter.format(parseDateKey(entry.performedOn))}<strong>{entry.weightKg} kg</strong></span>
+                      <span key={entry.id}>
+                        {shortDateFormatter.format(parseDateKey(entry.performedOn))}
+                        <strong>{Math.round(entry.weightKg * poundsPerKilogram * 10) / 10} lbs</strong>
+                      </span>
                     ))}
                   </div>
                 </>
@@ -581,7 +611,7 @@ export default function TrainingPage() {
               <label>Exercise<input required value={strengthDraft.exercise} onChange={(event) => setStrengthDraft({ ...strengthDraft, exercise: event.target.value })} style={inputStyle} /></label>
               <label>Date<input required type="date" value={strengthDraft.performedOn} onChange={(event) => setStrengthDraft({ ...strengthDraft, performedOn: event.target.value })} style={inputStyle} /></label>
               <div>
-                <label>Weight (kg)<input required type="number" min="0" step="0.5" value={strengthDraft.weightKg} onChange={(event) => setStrengthDraft({ ...strengthDraft, weightKg: event.target.value })} style={inputStyle} /></label>
+                <label>Weight (lbs)<input required type="number" min="0" step="0.5" value={strengthDraft.weightLbs} onChange={(event) => setStrengthDraft({ ...strengthDraft, weightLbs: event.target.value })} style={inputStyle} /></label>
                 <label>Sets<input required type="number" min="1" value={strengthDraft.sets} onChange={(event) => setStrengthDraft({ ...strengthDraft, sets: event.target.value })} style={inputStyle} /></label>
                 <label>Reps<input required type="number" min="1" value={strengthDraft.reps} onChange={(event) => setStrengthDraft({ ...strengthDraft, reps: event.target.value })} style={inputStyle} /></label>
               </div>

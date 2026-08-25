@@ -7,6 +7,7 @@ export interface TrainingWorkout {
   sport: TrainingSport;
   durationMinutes: number;
   distanceKm?: number;
+  plannedDistanceKm?: number;
   completed: boolean;
   source: "plan" | "manual" | "strava" | "runna";
   notes?: string;
