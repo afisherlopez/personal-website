@@ -57,11 +57,11 @@ export const aboutSection: AboutSectionContent = {
   details: [
     {
       title: "Currently",
-      text: "I'm interning at ",
-      linkLabel: "Blue Forest",
-      linkHref: "https://blueforest.org",
+      text: "I'm working as Member of Technical Staff at ",
+      linkLabel: "Vercel",
+      linkHref: "https://vercel.com",
       linkTrailingText:
-        ", working to protect our forests and their communities from wildfires.",
+        ", learning how to efficiently transform numbers into narratives for people and their agents.",
     },
     {
       title: "Previously",
