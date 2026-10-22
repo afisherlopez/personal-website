@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/stronglegs/:path*",
+        "destination": "https://YOUR-STRONGLEGS-PROJECT.vercel.app/stronglegs/:path*"
+      }
+    ]
+  }
