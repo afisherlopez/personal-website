@@ -5,8 +5,12 @@
     "outputDirectory": "docs",
     "rewrites": [
       {
-        "source": "/stronglegs/:path*",
-        "destination": "https://afl-stronglegs.vercel.app/stronglegs/:path*"
+        "source": "/stronglegs",
+        "destination": "https://afl-stronglegs.vercel.app/stronglegs"
+      },
+      {
+        "source": "/stronglegs/:path+",
+        "destination": "https://afl-stronglegs.vercel.app/stronglegs/:path+"
       }
     ]
   }
