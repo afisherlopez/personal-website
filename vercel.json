@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/stronglegs/:path*",
-        "destination": "https://YOUR-STRONGLEGS-PROJECT.vercel.app/stronglegs/:path*"
+        "destination": "https://afl-stronglegs.vercel.app/stronglegs/:path*"
       }
     ]
   }
